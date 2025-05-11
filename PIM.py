@@ -5,6 +5,19 @@ import json
 # Variável global para armazenar o login do usuário
 usuario_logado = None
 
+def carregar_acessos():
+    """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
+    with open("user.json", "r", encoding="utf-8") as arquivo:
+            acessos = json.load(arquivo)
+            return json.load(arquivo)
+    
+def verificar_acesso(usuario):
+    """Função para verificar o tipo de acesso do usuário."""
+    acessos = carregar_acessos()
+    for u in acessos["usuarios"]:
+        if u["login"] == usuario:
+            return u["tipo_acesso"]
+
 def login():
     """Função para realizar o login do usuário.
     Exibe a página de login e solicita o nome do usuário até que ele seja fornecido.
@@ -31,7 +44,7 @@ def esqueci_senha():
     else:
         print("Este RA não está cadastrado. Tente novamente. \nCaso não tenha cadastro, entre em contato com o suporte.")
 
-def login():
+def menu_login():
     """Função para realizar o login do usuário."""
     global usuario_logado
     while not usuario_logado:
