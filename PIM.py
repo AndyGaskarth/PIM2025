@@ -116,11 +116,13 @@ def menu_cursos():
 def cadastro_cursos():
     """Função para solicitar o cadastro de novos cursos."""
     print("=== Solicitar Cadastro de Cursos ===")
-    curso_nome = input("Digite o nome do curso que deseja cadastrar: ").strip()
-    if curso_nome:
-        print(f"Solicitação de cadastro do curso '{curso_nome}' enviada com sucesso!")
-    else:
-        print("O nome do curso não pode estar vazio. Tente novamente.")
+    while True: 
+        curso_nome = input("Digite o nome do curso que deseja cadastrar: ").strip()
+        if curso_nome:
+            print(f"Solicitação de cadastro do curso '{curso_nome}' enviada com sucesso!")
+            break
+        else:
+            print("O nome do curso não pode estar vazio. Tente novamente.")
 
 def ultimo_curso_assistido():
     """Função para exibir o último curso assistido."""
@@ -139,10 +141,13 @@ def security():
         print("\n")
         print("=== Fim das Informações de Segurança (LGPD) ===")
         print("1. Próxima página")
+        print("2. Perguntas Frequentes sobre LGPD")
         print("0. Voltar ao Menu Principal")
         escolha = input("Escolha uma opção: ").strip()
         if escolha == "1":
             security1()
+        elif escolha == "2":
+            security_faq()
         elif escolha == "0":
             print("Voltando ao Menu Principal...")
             break
@@ -168,7 +173,26 @@ def security1():
         else:
             print("Opção inválida. Tente novamente.")
 
-
+def security_faq():
+    while True:
+        """Função para exibir perguntas frequentes sobre LGPD."""
+        print("=== Perguntas Frequentes sobre LGPD ===")
+        print("1. O que é a LGPD?")
+        print("2. Quais dados são coletados?")
+        print("3. Como posso corrigir meus dados?")
+        print("4. Como posso excluir meus dados?")
+        print("0. Voltar ao Menu de Segurança")
+        escolha = input("Escolha uma opção: ").strip()
+        if escolha == 1:
+            print("A LGPD é a Lei Geral de Proteção de Dados, que visa garantir a privacidade dos dados pessoais.")
+        elif escolha == 2:
+            print("Coletamos dados como nome, email, e outros dados necessários para prestar nossos serviços.")
+        elif escolha == 3:
+            print("Você pode corrigir seus dados entrando em contato com o suporte.")
+        elif escolha == 4:
+            print("Você pode solicitar a exclusão dos seus dados entrando em contato com o suporte.")
+        elif escolha == 5:
+            print("Voltando ao Menu de Segurança...")
 
 
 def menu():
