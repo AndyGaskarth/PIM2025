@@ -1,5 +1,3 @@
-
-
 import json
 
 # Variável global para armazenar o login do usuário
@@ -13,12 +11,13 @@ def carregar_acessos():
             acessos = json.load(user_file)
             return json.load(user_file)
     
-def verificar_acesso(usuario):
-    """Função para verificar o tipo de acesso do usuário."""
+def verificar_acesso(usuario, senha):
+    """Função para verificar o login, senha e retornar o tipo de acesso (role) do usuário."""
     acessos = carregar_acessos()
     for u in acessos["usuarios"]:
-        if u["login"] == usuario:
-            return u["tipo_acesso"]
+        if u["username"] == usuario and u["password"] == senha:
+            return u["role"]  # Retorna a role do usuário
+    return None  # Retorna None se o login ou senha estiverem incorretos
         
 def cadastrar_usuario():
         """Função para informar sobre o processo de cadastro de um novo usuário."""
@@ -35,7 +34,7 @@ def esqueci_senha():
         print("Este RA não está cadastrado. Tente novamente. \nCaso não tenha cadastro, entre em contato com o suporte.")
 
 def menu_login():
-    """Função para realizar o login do usuário."""
+    """Função para realizar o login do usuário e validar o tipo de acesso."""
     global usuario_logado, usuario_role
     while not usuario_logado:
         print("=== Página de Login ===")
@@ -44,18 +43,16 @@ def menu_login():
         escolha = input("Escolha uma opção: ").strip()
         if escolha == "1":
             usuario_logado = input("Digite seu login: ").strip()
-            if not usuario_logado:
-                print("O login não pode estar vazio. Tente novamente.")
+            senha = input("Digite sua senha: ").strip()
+            if not usuario_logado or not senha:
+                print("O login e a senha não podem estar vazios. Tente novamente.")
             else:
-                usuario_role = verificar_acesso(usuario_logado)
+                # Verifica o login, senha e role do usuário
+                usuario_role = verificar_acesso(usuario_logado, senha)
                 if usuario_role:
                     print(f"Bem-vindo, {usuario_logado}! Seu papel é: {usuario_role}.")
-                senha = input("Digite sua senha: ").strip()
-                if not senha:
-                    print("A senha não pode estar vazia. Tente novamente.")
-                    usuario_logado = None
                 else:
-                    print("Usuário não encontrado. Tente novamente.")
+                    print("Login ou senha incorretos. Tente novamente.")
                     usuario_logado = None
         elif escolha == "0":
             print("Saindo...")
