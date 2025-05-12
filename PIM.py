@@ -12,12 +12,14 @@ def carregar_acessos():
             return json.load(user_file)
     
 def verificar_acesso(usuario, senha):
-    """Função para verificar o login, senha e retornar o tipo de acesso (role) do usuário."""
+    """Função para verificar o login, senha e retornar o tipo de acesso (role) e o nome completo do usuário."""
     acessos = carregar_acessos()
     for u in acessos["usuarios"]:
         if u["username"] == usuario and u["password"] == senha:
-            return u["role"]  # Retorna a role do usuário
-    return None  # Retorna None se o login ou senha estiverem incorretos
+            # Retorna a role e o nome completo do usuário
+            nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
+            return u["role"], nome_completo
+    return None, None  # Retorna None se o login ou senha estiverem incorretos
         
 def cadastrar_usuario():
         """Função para informar sobre o processo de cadastro de um novo usuário."""
@@ -42,23 +44,56 @@ def menu_login():
         print("0. Sair")
         escolha = input("Escolha uma opção: ").strip()
         if escolha == "1":
-            usuario_logado = input("Digite seu login: ").strip()
+            username = input("Digite seu login: ").strip()
             senha = input("Digite sua senha: ").strip()
-            if not usuario_logado or not senha:
+            if not username or not senha:
                 print("O login e a senha não podem estar vazios. Tente novamente.")
             else:
                 # Verifica o login, senha e role do usuário
-                usuario_role = verificar_acesso(usuario_logado, senha)
+                usuario_role, nome_completo = verificar_acesso(username, senha)
                 if usuario_role:
-                    print(f"Bem-vindo, {usuario_logado}! Seu papel é: {usuario_role}.")
+                    usuario_logado = nome_completo  # Armazena o nome completo do usuário
+                    print(f"Bem-vindo, {usuario_logado}!")
                 else:
                     print("Login ou senha incorretos. Tente novamente.")
-                    usuario_logado = None
         elif escolha == "0":
             print("Saindo...")
             exit()
         else:
             print("Opção inválida. Tente novamente.")
+
+def alterar_senha():
+    """Função para alterar a senha de um usuário (apenas para admins)."""
+    global usuario_role
+    if usuario_role != "admin":
+        print("Acesso negado. Apenas administradores podem alterar senhas.")
+        return
+
+    print("=== Alterar Senha de Usuário ===")
+    username = input("Digite o nome de usuário para alterar a senha: ").strip()
+    nova_senha = input("Digite a nova senha: ").strip()
+
+    if not username or not nova_senha:
+        print("O nome de usuário e a nova senha não podem estar vazios.")
+        return
+
+    # Carregar os dados do arquivo JSON
+    acessos = carregar_acessos()
+
+    # Procurar o usuário no JSON
+    for usuario in acessos["usuarios"]:
+        if usuario["username"] == username:
+            usuario["password"] = nova_senha  # Atualizar a senha
+            break
+    else:
+        print("Usuário não encontrado.")
+        return
+
+    # Salvar as alterações no arquivo JSON
+    with open("user.json", "w", encoding="utf-8") as user_file:
+        json.dump(acessos, user_file, indent=4, ensure_ascii=False)
+
+    print(f"A senha do usuário '{username}' foi alterada com sucesso.")
 
 
 def listar_cursos():
@@ -203,12 +238,15 @@ def menu():
     print("1. Menu de Cursos Disponíveis")
     if usuario_role == "admin":
         print("2. Gerenciar Usuários")
+        print("3. Alterar Senha de Usuário")
     print("0. Sair")
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
         menu_cursos()
     elif escolha == "2" and usuario_role == "admin":
         print("Acesso ao Gerenciamento de Usuários.")
+    elif escolha == "3" and usuario_role == "admin":
+        alterar_senha()
     elif escolha == "0":
         print("Saindo...")
         exit()
