@@ -1,142 +1,135 @@
 {
     "usuarios": [
-        { 
-        "username": "admin", 
-        "password": "admin", 
-        "role": "admin"
-    },
-    { 
-        "username": "sousa", 
-        "password": "password2", 
-        "role": "coordenacao", 
-        "firstName": "Adriana", 
-        "lastName": "Sousa" 
-    },
-    { 
-        "username": "carvr", 
-        "password": "password3", 
-        "role": "coordenacao", 
-        "firstName": "Rosangela", 
-        "lastName": "Carvalho" 
-    },
-    { 
-        "username": "souzr", 
-        "password": "password4", 
-        "role": "coordenacao", 
-        "firstName": "Roberta", 
-        "lastName": "Souza" 
-    },
-    { 
-        "username": "peret", 
-        "password": "password5", 
-        "role": "professor", 
-        "firstName": "Thiago", 
-        "lastName": "Pereira" 
-    },
-    { 
-        "username": "limap", 
-        "password": "password6", 
-        "role": "professor", 
-        "firstName": "Paulo", 
-        "lastName": "Lima" 
-    },
-    { 
-        "username": "ferrh", 
-        "password": "password7", 
-        "role": "aluno", 
-        "firstName": "Henry", 
-        "lastName": "Ferreira" 
-    },
-    { 
-        "username": "costl", 
-        "password": "password8", 
-        "role": "aluno", 
-        "firstName": "Lucas", 
-        "lastName": "Costa" 
-    },
-    { 
-        "username": "gomea", 
-        "password": "password9", 
-        "role": "aluno", 
-        "firstName": "Alicia", 
-        "lastName": "Gomes" 
-    },
-    { 
-        "username": "marta", 
-        "password": "password10", 
-        "role": "aluno", 
-        "firstName": "Alexia", 
-        "lastName": "Martins" 
-    },
-    { 
-        "username": "barbb", 
-        "password": "password11", 
-        "role": "aluno", 
-        "firstName": "Bruno", 
-        "lastName": "Barbosa" 
-    },
-    { 
-        "username": "ribeb", 
-        "password": "password12", 
-        "role": "aluno", 
-        "firstName": "Brenda", 
-        "lastName": "Ribeiro" 
-    },
-    { 
-        "username": "almec", 
-        "password": "password13", 
-        "role": "aluno", 
-        "firstName": "Caique", 
-        "lastName": "Almeida" 
-    },
-    { 
-        "username": "meloc", 
-        "password": "password14", 
-        "role": "aluno", 
-        "firstName": "Caua", 
-        "lastName": "Melo" 
-    },
-    { 
-        "username": "carvc", 
-        "password": "password15", 
-        "role": "aluno", 
-        "firstName": "Cecilia", 
-        "lastName": "Carvalho" 
-    },
-    { 
-        "username": "rochd", 
-        "password": "password16", 
-        "role": "aluno", 
-        "firstName": "Daniela", 
-        "lastName": "Rocha" 
-    },
-    { 
-        "username": "diasd", 
-        "password": "password17", 
-        "role": "aluno", 
-        "firstName": "Daniel", 
-        "lastName": "Dias" 
-    },
-    { 
-        "username": "teixe", 
-        "password": "password18", 
-        "role": "aluno", 
-        "firstName": "Elieser", 
-        "lastName": "Teixeira" 
-    },
-    { 
-        "username": "moref", 
-        "password": "password19", 
-        "role": "aluno", 
-        "firstName": "Felipe", 
-        "lastName": "Moreira" 
-    },
-    { 
-        "username": "vieig", 
-        "password": "password20", 
-        "role": "aluno", 
-        "firstName": "Giulia", 
-        "lastName": "Vieira" 
-    }
-        ]
+        {
+            "username": "admin",
+            "password": "admin",
+            "role": "admin"
+        },
+        {
+            "username": "sousa",
+            "password": "teste1",
+            "role": "coordenacao",
+            "firstName": "Adriana",
+            "lastName": "Sousa"
+        },
+        {
+            "username": "carvr",
+            "password": "password3",
+            "role": "coordenacao",
+            "firstName": "Rosangela",
+            "lastName": "Carvalho"
+        },
+        {
+            "username": "ferrh",
+            "password": "password7",
+            "role": "aluno",
+            "firstName": "Henry",
+            "lastName": "Ferreira",
+            "ra": "A1B2C3"
+        },
+        {
+            "username": "costl",
+            "password": "password8",
+            "role": "aluno",
+            "firstName": "Lucas",
+            "lastName": "Costa",
+            "ra": "D4E5F6"
+        },
+        {
+            "username": "gomea",
+            "password": "password9",
+            "role": "aluno",
+            "firstName": "Alicia",
+            "lastName": "Gomes",
+            "ra": "G7H8I9"
+        },
+        {
+            "username": "marta",
+            "password": "password10",
+            "role": "aluno",
+            "firstName": "Alexia",
+            "lastName": "Martins",
+            "ra": "J1K2L3"
+        },
+        {
+            "username": "barbb",
+            "password": "password11",
+            "role": "aluno",
+            "firstName": "Bruno",
+            "lastName": "Barbosa",
+            "ra": "M4N5O6"
+        },
+        {
+            "username": "ribeb",
+            "password": "password12",
+            "role": "aluno",
+            "firstName": "Brenda",
+            "lastName": "Ribeiro",
+            "ra": "P7Q8R9"
+        },
+        {
+            "username": "almec",
+            "password": "password13",
+            "role": "aluno",
+            "firstName": "Caique",
+            "lastName": "Almeida",
+            "ra": "S1T2U3"
+        },
+        {
+            "username": "meloc",
+            "password": "password14",
+            "role": "aluno",
+            "firstName": "Caua",
+            "lastName": "Melo",
+            "ra": "V4W5X6"
+        },
+        {
+            "username": "carvc",
+            "password": "password15",
+            "role": "aluno",
+            "firstName": "Cecilia",
+            "lastName": "Carvalho",
+            "ra": "Y7Z8A9"
+        },
+        {
+            "username": "rochd",
+            "password": "password16",
+            "role": "aluno",
+            "firstName": "Daniela",
+            "lastName": "Rocha",
+            "ra": "B1C2D3"
+        },
+        {
+            "username": "diasd",
+            "password": "password17",
+            "role": "aluno",
+            "firstName": "Daniel",
+            "lastName": "Dias",
+            "ra": "E4F5G6"
+        },
+        {
+            "username": "teixe",
+            "password": "password18",
+            "role": "aluno",
+            "firstName": "Elieser",
+            "lastName": "Teixeira",
+            "ra": "H7I8J9"
+        },
+        {
+            "username": "moref",
+            "password": "password19",
+            "role": "aluno",
+            "firstName": "Felipe",
+            "lastName": "Moreira",
+            "ra": "K1L2M3"
+        },
+        {
+            "username": "vieig",
+            "password": "password20",
+            "role": "aluno",
+            "firstName": "Giulia",
+            "lastName": "Vieira",
+            "ra": "N4O5P6"
+        }
+    ]
 }
