@@ -250,18 +250,20 @@ def menu():
     print(f"\nUsuário logado: {usuario_logado}")
     print("=== Menu Principal ===")
     print("1. Menu de Cursos Disponíveis")
-    print("3. Segurança e Privacidade")
+    print("2. Segurança e Privacidade")
     if usuario_role == "admin":
-        print("2. Gerenciar Usuários")
-        print("3. Alterar Senha de Usuário")
+        print("3. Gerenciar Usuários")
+        print("4. Alterar Senha de Usuário")
     print("0. Sair")
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
         menu_cursos()
-    elif escolha == "2" and usuario_role == "admin":
-        print("Acesso ao Gerenciamento de Usuários.")
     elif escolha == "2":
         menu_seguranca()
+    elif escolha == "3" and usuario_role == "admin":
+        print("Acesso ao Gerenciamento de Usuários.")
+    elif escolha == "4" and usuario_role == "admin":
+        alterar_senha()
     elif escolha == "0":
         print("Saindo...")
         exit()
