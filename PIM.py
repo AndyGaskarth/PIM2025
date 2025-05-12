@@ -188,8 +188,11 @@ def security_faq():
             print("Você pode corrigir seus dados entrando em contato com o suporte.")
         elif escolha == 4:
             print("Você pode solicitar a exclusão dos seus dados entrando em contato com o suporte.")
-        elif escolha == 5:
+        elif escolha == 0:
             print("Voltando ao Menu de Segurança...")
+            return  
+        else: 
+            print("Opção inválida. Tente novamente.")
 
 
 def menu():
