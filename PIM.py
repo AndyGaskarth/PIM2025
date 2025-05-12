@@ -8,7 +8,7 @@ usuario_role = None
 def carregar_acessos():
     """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
     with open("user.json", "r", encoding="utf-8") as user_file:
-            acessos = json.load(user_file)
+        # Carrega os dados do arquivo JSON e retorna como um dicionário
             return json.load(user_file)
     
 def verificar_acesso(usuario, senha):
