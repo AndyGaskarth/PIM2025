@@ -4,12 +4,14 @@ import json
 
 # Variável global para armazenar o login do usuário
 usuario_logado = None
+# Variável global para armazenar o tipo de acesso do usuário
+usuario_role = None
 
 def carregar_acessos():
     """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
-    with open("user.json", "r", encoding="utf-8") as arquivo:
-            acessos = json.load(arquivo)
-            return json.load(arquivo)
+    with open("user.json", "r", encoding="utf-8") as user_file:
+            acessos = json.load(user_file)
+            return json.load(user_file)
     
 def verificar_acesso(usuario):
     """Função para verificar o tipo de acesso do usuário."""
@@ -17,19 +19,7 @@ def verificar_acesso(usuario):
     for u in acessos["usuarios"]:
         if u["login"] == usuario:
             return u["tipo_acesso"]
-
-def login():
-    """Função para realizar o login do usuário.
-    Exibe a página de login e solicita o nome do usuário até que ele seja fornecido.
-    também foi criado uma variavel para sempre que o usuario logar, o nome dele ser armazenado na variavel usuario_logado"""
-    global usuario_logado
-    print("=== Página de Login ===")
-    while not usuario_logado:
-        usuario_logado = input("Digite seu login: ").strip()
-        if not usuario_logado:
-            print("O login não pode estar vazio. Tente novamente.")
-    print(f"Bem-vindo, {usuario_logado}!")
-
+        
 def cadastrar_usuario():
         """Função para informar sobre o processo de cadastro de um novo usuário."""
         print("=== Cadastro de Novo Usuário ===")
@@ -46,12 +36,10 @@ def esqueci_senha():
 
 def menu_login():
     """Função para realizar o login do usuário."""
-    global usuario_logado
+    global usuario_logado, usuario_role
     while not usuario_logado:
         print("=== Página de Login ===")
         print("1. Fazer Login")
-        print("2. Cadastrar Novo Usuário")
-        print("3. Esqueci a Senha")
         print("0. Sair")
         escolha = input("Escolha uma opção: ").strip()
         if escolha == "1":
@@ -59,11 +47,16 @@ def menu_login():
             if not usuario_logado:
                 print("O login não pode estar vazio. Tente novamente.")
             else:
-                print(f"Bem-vindo, {usuario_logado}!")
-        elif escolha == "2":
-            cadastrar_usuario()
-        elif escolha == "3":
-            esqueci_senha()
+                usuario_role = verificar_acesso(usuario_logado)
+                if usuario_role:
+                    print(f"Bem-vindo, {usuario_logado}! Seu papel é: {usuario_role}.")
+                senha = input("Digite sua senha: ").strip()
+                if not senha:
+                    print("A senha não pode estar vazia. Tente novamente.")
+                    usuario_logado = None
+                else:
+                    print("Usuário não encontrado. Tente novamente.")
+                    usuario_logado = None
         elif escolha == "0":
             print("Saindo...")
             exit()
@@ -168,32 +161,28 @@ def security1():
 
 def menu():
     """Função para exibir o menu principal."""
-    global usuario_logado
+    global usuario_logado, usuario_role
     print(f"\nUsuário logado: {usuario_logado}")
     print("=== Menu Principal ===")
     print("1. Menu de Cursos Disponíveis")
-    print("2. Solicitar Cadastro de Cursos")
-    print("3. Último Curso Assistido")
-    print("4. Informações de Segurança ( LGPD)")
+    if usuario_role == "admin":
+        print("2. Gerenciar Usuários")
     print("0. Sair")
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
         menu_cursos()
-        print("Menu de Cursos Disponíveis")
-    elif escolha == "2":
-        cadastro_cursos()
-    elif escolha == "3":
-        ultimo_curso_assistido()
-    elif escolha == "4":
-        security()
+    elif escolha == "2" and usuario_role == "admin":
+        print("Acesso ao Gerenciamento de Usuários.")
     elif escolha == "0":
         print("Saindo...")
         exit()
+    else:
+        print("Opção inválida ou acesso negado.")
     
 
 def main():
     """Função principal que controla o fluxo do programa."""
-    login()  # Exibe a página de login primeiro
+    menu_login()  # Exibe a página de login primeiro
     while True:
         menu()  # Exibe o menu após o login
 

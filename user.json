@@ -1,121 +1,142 @@
-[
-    
-    { 
-        "username": "nome da ong", 
-        "password": "password1", 
-        "role": "admin"},
+{
+    "usuarios": [
+        { 
+        "username": "admin", 
+        "password": "admin", 
+        "role": "admin"
+    },
     { 
         "username": "sousa", 
         "password": "password2", 
         "role": "coordenacao", 
         "firstName": "Adriana", 
-        "lastName": "Sousa" },
+        "lastName": "Sousa" 
+    },
     { 
         "username": "carvr", 
         "password": "password3", 
         "role": "coordenacao", 
         "firstName": "Rosangela", 
-        "lastName": "Carvalho" },
+        "lastName": "Carvalho" 
+    },
     { 
         "username": "souzr", 
         "password": "password4", 
         "role": "coordenacao", 
         "firstName": "Roberta", 
-        "lastName": "Souza" },
+        "lastName": "Souza" 
+    },
     { 
         "username": "peret", 
         "password": "password5", 
         "role": "professor", 
         "firstName": "Thiago", 
-        "lastName": "Pereira" },
+        "lastName": "Pereira" 
+    },
     { 
         "username": "limap", 
         "password": "password6", 
         "role": "professor", 
         "firstName": "Paulo", 
-        "lastName": "Lima" },
+        "lastName": "Lima" 
+    },
     { 
         "username": "ferrh", 
         "password": "password7", 
         "role": "aluno", 
         "firstName": "Henry", 
-        "lastName": "Ferreira" },
+        "lastName": "Ferreira" 
+    },
     { 
         "username": "costl", 
         "password": "password8", 
         "role": "aluno", 
         "firstName": "Lucas", 
-        "lastName": "Costa" },
+        "lastName": "Costa" 
+    },
     { 
         "username": "gomea", 
         "password": "password9", 
         "role": "aluno", 
         "firstName": "Alicia", 
-        "lastName": "Gomes" },
+        "lastName": "Gomes" 
+    },
     { 
         "username": "marta", 
         "password": "password10", 
         "role": "aluno", 
         "firstName": "Alexia", 
-        "lastName": "Martins" },
+        "lastName": "Martins" 
+    },
     { 
         "username": "barbb", 
         "password": "password11", 
         "role": "aluno", 
         "firstName": "Bruno", 
-        "lastName": "Barbosa" },
+        "lastName": "Barbosa" 
+    },
     { 
         "username": "ribeb", 
         "password": "password12", 
         "role": "aluno", 
         "firstName": "Brenda", 
-        "lastName": "Ribeiro" },
+        "lastName": "Ribeiro" 
+    },
     { 
         "username": "almec", 
         "password": "password13", 
         "role": "aluno", 
         "firstName": "Caique", 
-        "lastName": "Almeida" },
+        "lastName": "Almeida" 
+    },
     { 
         "username": "meloc", 
         "password": "password14", 
         "role": "aluno", 
         "firstName": "Caua", 
-        "lastName": "Melo" },
+        "lastName": "Melo" 
+    },
     { 
         "username": "carvc", 
         "password": "password15", 
         "role": "aluno", 
         "firstName": "Cecilia", 
-        "lastName": "Carvalho" },
+        "lastName": "Carvalho" 
+    },
     { 
         "username": "rochd", 
         "password": "password16", 
         "role": "aluno", 
         "firstName": "Daniela", 
-        "lastName": "Rocha" },
+        "lastName": "Rocha" 
+    },
     { 
         "username": "diasd", 
         "password": "password17", 
         "role": "aluno", 
         "firstName": "Daniel", 
-        "lastName": "Dias" },
+        "lastName": "Dias" 
+    },
     { 
         "username": "teixe", 
         "password": "password18", 
         "role": "aluno", 
         "firstName": "Elieser", 
-        "lastName": "Teixeira" },
+        "lastName": "Teixeira" 
+    },
     { 
         "username": "moref", 
         "password": "password19", 
         "role": "aluno", 
         "firstName": "Felipe", 
-        "lastName": "Moreira" },
+        "lastName": "Moreira" 
+    },
     { 
         "username": "vieig", 
         "password": "password20", 
         "role": "aluno", 
         "firstName": "Giulia", 
-        "lastName": "Vieira" }
-]
+        "lastName": "Vieira" 
+    }
+        ]
+}
