@@ -3,7 +3,9 @@
         {
             "username": "admin",
             "password": "admin",
-            "role": "admin"
+            "role": "admin",
+            "firstName": "Tech",
+            "lastName": "Escola"
         },
         {
             "username": "sousa",

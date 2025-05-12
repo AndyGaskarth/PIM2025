@@ -52,7 +52,7 @@ def menu_login():
                 # Verifica o login, senha e role do usuário
                 usuario_role, nome_completo = verificar_acesso(username, senha)
                 if usuario_role:
-                    usuario_logado = nome_completo  # Armazena o nome completo do usuário
+                    usuario_logado = nome_completo  # Atualiza a variável global com o nome completo do usuário
                     print(f"Bem-vindo, {usuario_logado}!")
                 else:
                     print("Login ou senha incorretos. Tente novamente.")
