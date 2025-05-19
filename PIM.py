@@ -294,7 +294,26 @@ def estatisticas_gerais():
     print(f"Total de cursos concluídos: {total_cursos}")
     print(f"Média de cursos concluídos por aluno: {media_cursos:.2f}")
     print("=================================")
-    
+
+def estatisticas_usuario():
+    global usuario_logado
+    dados = carregar_acessos()
+    usuarios = dados.get("usuarios", [])
+
+    for u in usuarios:
+        nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
+        if nome_completo == usuario_logado:
+            print("\n=== Estatísticas do Usuário Logado ===")
+            print(f"Nome: {nome_completo}")
+            print(f"Username: {u.get('username')}")
+            print(f"Acessos: {u.get('acessos', 0)}")
+            print(f"Cursos concluídos: {u.get('cursos_concluidos', 0)}")
+            print(u)
+            print("==============================")
+            break
+    else:
+        print("Usuário não encontrado.")
+
 def menu():
     """Função para exibir o menu principal."""
     global usuario_logado, usuario_role
