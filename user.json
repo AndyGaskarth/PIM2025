@@ -1,137 +1,222 @@
 {
-    "usuarios": [
-        {
-            "username": "admin",
-            "password": "admin",
-            "role": "admin",
-            "firstName": "Tech",
-            "lastName": "Escola"
-        },
-        {
-            "username": "sousa",
-            "password": "teste",
-            "role": "coordenacao",
-            "firstName": "Adriana",
-            "lastName": "Sousa"
-        },
-        {
-            "username": "carvr",
-            "password": "password3",
-            "role": "coordenacao",
-            "firstName": "Rosangela",
-            "lastName": "Carvalho"
-        },
-        {
-            "username": "ferrh",
-            "password": "password7",
-            "role": "aluno",
-            "firstName": "Henry",
-            "lastName": "Ferreira",
-            "ra": "A1B2C3"
-        },
-        {
-            "username": "costl",
-            "password": "password8",
-            "role": "aluno",
-            "firstName": "Lucas",
-            "lastName": "Costa",
-            "ra": "D4E5F6"
-        },
-        {
-            "username": "gomea",
-            "password": "password9",
-            "role": "aluno",
-            "firstName": "Alicia",
-            "lastName": "Gomes",
-            "ra": "G7H8I9"
-        },
-        {
-            "username": "marta",
-            "password": "password10",
-            "role": "aluno",
-            "firstName": "Alexia",
-            "lastName": "Martins",
-            "ra": "J1K2L3"
-        },
-        {
-            "username": "barbb",
-            "password": "password11",
-            "role": "aluno",
-            "firstName": "Bruno",
-            "lastName": "Barbosa",
-            "ra": "M4N5O6"
-        },
-        {
-            "username": "ribeb",
-            "password": "password12",
-            "role": "aluno",
-            "firstName": "Brenda",
-            "lastName": "Ribeiro",
-            "ra": "P7Q8R9"
-        },
-        {
-            "username": "almec",
-            "password": "password13",
-            "role": "aluno",
-            "firstName": "Caique",
-            "lastName": "Almeida",
-            "ra": "S1T2U3"
-        },
-        {
-            "username": "meloc",
-            "password": "password14",
-            "role": "aluno",
-            "firstName": "Caua",
-            "lastName": "Melo",
-            "ra": "V4W5X6"
-        },
-        {
-            "username": "carvc",
-            "password": "password15",
-            "role": "aluno",
-            "firstName": "Cecilia",
-            "lastName": "Carvalho",
-            "ra": "Y7Z8A9"
-        },
-        {
-            "username": "rochd",
-            "password": "password16",
-            "role": "aluno",
-            "firstName": "Daniela",
-            "lastName": "Rocha",
-            "ra": "B1C2D3"
-        },
-        {
-            "username": "diasd",
-            "password": "password17",
-            "role": "aluno",
-            "firstName": "Daniel",
-            "lastName": "Dias",
-            "ra": "E4F5G6"
-        },
-        {
-            "username": "teixe",
-            "password": "password18",
-            "role": "aluno",
-            "firstName": "Elieser",
-            "lastName": "Teixeira",
-            "ra": "H7I8J9"
-        },
-        {
-            "username": "moref",
-            "password": "password19",
-            "role": "aluno",
-            "firstName": "Felipe",
-            "lastName": "Moreira",
-            "ra": "K1L2M3"
-        },
-        {
-            "username": "vieig",
-            "password": "password20",
-            "role": "aluno",
-            "firstName": "Giulia",
-            "lastName": "Vieira",
-            "ra": "N4O5P6"
-        }
-    ]
+  "usuarios": [
+    {
+      "username": "admin",
+      "password": "admin",
+      "role": "admin",
+      "firstName": "Tech",
+      "lastName": "Escola",
+      "idade": 35,
+      "acessos": 320,
+      "cursos_concluidos": 8,
+      "ultimo_curso": "Gestão de Plataformas",
+      "media_semanal": 22
+    },
+    {
+      "username": "sousa",
+      "password": "teste",
+      "role": "coordenacao",
+      "firstName": "Adriana",
+      "lastName": "Sousa",
+      "idade": 42,
+      "acessos": 210,
+      "cursos_concluidos": 5,
+      "ultimo_curso": "Estatística para Educação",
+      "media_semanal": 15
+    },
+    {
+      "username": "carvr",
+      "password": "password3",
+      "role": "coordenacao",
+      "firstName": "Rosangela",
+      "lastName": "Carvalho",
+      "idade": 39,
+      "acessos": 198,
+      "cursos_concluidos": 6,
+      "ultimo_curso": "Liderança Educacional",
+      "media_semanal": 14
+    },
+    {
+      "username": "ferrh",
+      "password": "password7",
+      "role": "aluno",
+      "firstName": "Henry",
+      "lastName": "Ferreira",
+      "ra": "A1B2C3",
+      "idade": 20,
+      "acessos": 75,
+      "cursos_concluidos": 2,
+      "ultimo_curso": "Python Básico",
+      "media_semanal": 7
+    },
+    {
+      "username": "costl",
+      "password": "password8",
+      "role": "aluno",
+      "firstName": "Lucas",
+      "lastName": "Costa",
+      "ra": "D4E5F6",
+      "idade": 22,
+      "acessos": 68,
+      "cursos_concluidos": 1,
+      "ultimo_curso": "Introdução à Lógica",
+      "media_semanal": 5
+    },
+    {
+      "username": "gomea",
+      "password": "password9",
+      "role": "aluno",
+      "firstName": "Alicia",
+      "lastName": "Gomes",
+      "ra": "G7H8I9",
+      "idade": 19,
+      "acessos": 80,
+      "cursos_concluidos": 2,
+      "ultimo_curso": "HTML e CSS",
+      "media_semanal": 8
+    },
+    {
+      "username": "marta",
+      "password": "password10",
+      "role": "aluno",
+      "firstName": "Alexia",
+      "lastName": "Martins",
+      "ra": "J1K2L3",
+      "idade": 21,
+      "acessos": 90,
+      "cursos_concluidos": 3,
+      "ultimo_curso": "Front-End Intermediário",
+      "media_semanal": 9
+    },
+    {
+      "username": "barbb",
+      "password": "password11",
+      "role": "aluno",
+      "firstName": "Bruno",
+      "lastName": "Barbosa",
+      "ra": "M4N5O6",
+      "idade": 23,
+      "acessos": 70,
+      "cursos_concluidos": 1,
+      "ultimo_curso": "Back-End Básico",
+      "media_semanal": 6
+    },
+    {
+      "username": "ribeb",
+      "password": "password12",
+      "role": "aluno",
+      "firstName": "Brenda",
+      "lastName": "Ribeiro",
+      "ra": "P7Q8R9",
+      "idade": 20,
+      "acessos": 65,
+      "cursos_concluidos": 2,
+      "ultimo_curso": "Git e GitHub",
+      "media_semanal": 6
+    },
+    {
+      "username": "almec",
+      "password": "password13",
+      "role": "aluno",
+      "firstName": "Caique",
+      "lastName": "Almeida",
+      "ra": "S1T2U3",
+      "idade": 24,
+      "acessos": 82,
+      "cursos_concluidos": 3,
+      "ultimo_curso": "Banco de Dados",
+      "media_semanal": 8
+    },
+    {
+      "username": "meloc",
+      "password": "password14",
+      "role": "aluno",
+      "firstName": "Caua",
+      "lastName": "Melo",
+      "ra": "V4W5X6",
+      "idade": 22,
+      "acessos": 78,
+      "cursos_concluidos": 2,
+      "ultimo_curso": "Redes de Computadores",
+      "media_semanal": 7
+    },
+    {
+      "username": "carvc",
+      "password": "password15",
+      "role": "aluno",
+      "firstName": "Cecilia",
+      "lastName": "Carvalho",
+      "ra": "Y7Z8A9",
+      "idade": 21,
+      "acessos": 85,
+      "cursos_concluidos": 3,
+      "ultimo_curso": "Cibersegurança Básica",
+      "media_semanal": 8
+    },
+    {
+      "username": "rochd",
+      "password": "password16",
+      "role": "aluno",
+      "firstName": "Daniela",
+      "lastName": "Rocha",
+      "ra": "B1C2D3",
+      "idade": 23,
+      "acessos": 95,
+      "cursos_concluidos": 3,
+      "ultimo_curso": "LGPD e Privacidade",
+      "media_semanal": 10
+    },
+    {
+      "username": "diasd",
+      "password": "password17",
+      "role": "aluno",
+      "firstName": "Daniel",
+      "lastName": "Dias",
+      "ra": "E4F5G6",
+      "idade": 25,
+      "acessos": 100,
+      "cursos_concluidos": 4,
+      "ultimo_curso": "Python Avançado",
+      "media_semanal": 10
+    },
+    {
+      "username": "teixe",
+      "password": "password18",
+      "role": "aluno",
+      "firstName": "Elieser",
+      "lastName": "Teixeira",
+      "ra": "H7I8J9",
+      "idade": 20,
+      "acessos": 60,
+      "cursos_concluidos": 1,
+      "ultimo_curso": "Lógica de Programação",
+      "media_semanal": 5
+    },
+    {
+      "username": "moref",
+      "password": "password19",
+      "role": "aluno",
+      "firstName": "Felipe",
+      "lastName": "Moreira",
+      "ra": "K1L2M3",
+      "idade": 21,
+      "acessos": 87,
+      "cursos_concluidos": 3,
+      "ultimo_curso": "Desenvolvimento Web",
+      "media_semanal": 9
+    },
+    {
+      "username": "vieig",
+      "password": "password20",
+      "role": "aluno",
+      "firstName": "Giulia",
+      "lastName": "Vieira",
+      "ra": "N4O5P6",
+      "idade": 22,
+      "acessos": 92,
+      "cursos_concluidos": 3,
+      "ultimo_curso": "Estatística Aplicada",
+      "media_semanal": 10
+    }
+  ]
 }
