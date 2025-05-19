@@ -1,10 +1,12 @@
 import json
 import statistics
+
 # Variável global para armazenar o login do usuário
 usuario_logado = None
 # Variável global para armazenar o tipo de acesso do usuário
 usuario_role = None
 
+# Armazena o nome de usuário do usuário atualmente logado, fiz isso porque não tava indo no menu de estatisticas :(
 usuario_logado_username = None
 
 
