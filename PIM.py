@@ -1,9 +1,10 @@
 import json
-
+import statistics
 # Variável global para armazenar o login do usuário
 usuario_logado = None
 # Variável global para armazenar o tipo de acesso do usuário
 usuario_role = None
+
 
 def carregar_acessos():
     """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
@@ -244,7 +245,56 @@ def perguntas_frequentes_lgpd():
         else: 
             print("Opção inválida. Tente novamente.")
 
+def menu_estatisticas():
+    while True:
+        print("=== Estatísticas do Usuário  ===")
+        print("1. Ver Estatísticas Gerais da Plataforma")
+        print("2. Ver Meu Desempenho (usuário logado)")
+        print("0. Voltar ao Menu Principal")
+        escolha = int(input("Escolha uma opção: ").strip())
 
+        if escolha == 1:
+            estatisticas_gerais()
+        elif escolha == 2:
+            break
+        elif escolha == 0:
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+
+def estatisticas_gerais():
+    print("\n====== ESTATÍSTICAS GERAIS ======")
+
+    acessos = carregar_acessos()
+    alunos = [u for u in acessos["usuarios"] if u.get('role') == 'aluno']
+
+    total_alunos = len(alunos)
+    total_acessos = sum(u.get('acessos', 0) for u in alunos)
+    media_acessos = total_acessos / total_alunos if total_alunos > 0 else 0
+
+    total_cursos = sum(u.get('cursos_concluidos', 0) for u in alunos)
+    media_cursos = total_cursos / total_alunos if total_alunos > 0 else 0
+
+    aluno_mais_ativo = max(alunos, key=lambda u: u.get('acessos', 0), default=None)
+    aluno_menos_ativo = min(alunos, key=lambda u: u.get('acessos', 0), default=None)
+
+    if aluno_mais_ativo:
+        print(f"Aluno mais ativo: {aluno_mais_ativo.get('firstName', '')} {aluno_mais_ativo.get('lastName', '')} ({aluno_mais_ativo.get('acessos', 0)} acessos)")
+    else:
+        print("Nenhum aluno ativo encontrado.")
+
+    if aluno_menos_ativo:
+        print(f"Aluno menos ativo: {aluno_menos_ativo.get('firstName', '')} {aluno_menos_ativo.get('lastName', '')} ({aluno_menos_ativo.get('acessos', 0)} acessos)")
+    else:
+        print("Nenhum aluno ativo encontrado.")
+
+    print(f"Total de alunos: {total_alunos}")
+    print(f"Total de acessos: {total_acessos}")
+    print(f"Média de acessos por aluno: {media_acessos:.2f}")
+    print(f"Total de cursos concluídos: {total_cursos}")
+    print(f"Média de cursos concluídos por aluno: {media_cursos:.2f}")
+    print("=================================")
+    
 def menu():
     """Função para exibir o menu principal."""
     global usuario_logado, usuario_role
@@ -252,18 +302,21 @@ def menu():
     print("=== Menu Principal ===")
     print("1. Menu de Cursos Disponíveis")
     print("2. Segurança e Privacidade")
+    print("3. Estatísticas Do Usuário")
     if usuario_role == "admin":
-        print("3. Gerenciar Usuários")
-        print("4. Alterar Senha de Usuário")
+        print("4. Gerenciar Usuários")
+        print("5. Alterar Senha de Usuário")
     print("0. Sair")
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
         menu_cursos()
     elif escolha == "2":
         menu_seguranca()
-    elif escolha == "3" and usuario_role == "admin":
-        print("Acesso ao Gerenciamento de Usuários.")
+    elif escolha == "3":
+        menu_estatisticas()
     elif escolha == "4" and usuario_role == "admin":
+        print("Acesso ao Gerenciamento de Usuários.")
+    elif escolha == "5" and usuario_role == "admin":
         alterar_senha()
     elif escolha == "0":
         print("Saindo...")
@@ -280,5 +333,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
