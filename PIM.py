@@ -5,6 +5,8 @@ usuario_logado = None
 # Variável global para armazenar o tipo de acesso do usuário
 usuario_role = None
 
+usuario_logado_username = None
+
 
 def carregar_acessos():
     """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
@@ -55,7 +57,9 @@ def menu_login():
                 if role:
                     usuario_logado = nome_completo # Atualiza a variável global com o nome completo do usuário
                     usuario_role = role   
-                    print(f"Bem-vindo, {usuario_logado}!")
+                    global usuario_logado_username
+                    usuario_logado_username = username
+                    print(f"Bem-vindo, {usuario_role}!")
                 else:
                     print("Login ou senha incorretos. Tente novamente.")
         elif escolha == "0":
@@ -256,7 +260,7 @@ def menu_estatisticas():
         if escolha == 1:
             estatisticas_gerais()
         elif escolha == 2:
-            break
+            estatisticas_usuario()
         elif escolha == 0:
             break
         else:
@@ -296,23 +300,32 @@ def estatisticas_gerais():
     print("=================================")
 
 def estatisticas_usuario():
-    global usuario_logado
-    dados = carregar_acessos()
-    usuarios = dados.get("usuarios", [])
+    """Exibe as estatísticas do usuário atualmente logado. Os dados são carregados a partir do arquivo 'user.json'."""
+    global usuario_logado, usuario_logado_username, usuario_role
+        
+    if not usuario_logado or not usuario_logado_username:
+        print("Nenhum usuário está logado.")
+        return
 
-    for u in usuarios:
-        nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
-        if nome_completo == usuario_logado:
-            print("\n=== Estatísticas do Usuário Logado ===")
-            print(f"Nome: {nome_completo}")
-            print(f"Username: {u.get('username')}")
-            print(f"Acessos: {u.get('acessos', 0)}")
-            print(f"Cursos concluídos: {u.get('cursos_concluidos', 0)}")
-            print(u)
-            print("==============================")
-            break
-    else:
-        print("Usuário não encontrado.")
+    #Tenta abrir o arquivo JSON com os dados dos usuários
+    try:
+        with open("user.json", "r", encoding="utf-8") as f:
+            dados = json.load(f)
+    except FileNotFoundError:
+        print("Arquivo de estatísticas não encontrado.")
+        return
+    
+    # Procura os dados do usuário logado no JSON
+    for usuario in dados["usuarios"]:
+        if usuario.get("username") in [usuario_logado_username, usuario_role]:
+            print("\n=== Estatísticas do Usuário ===")
+            print(f"Nome: {usuario_logado}")
+            print(f"Idade: {usuario.get('idade', 'N/A')}")
+            print(f"Acessos: {usuario.get('acessos', 'N/A')}")
+            print(f"Cursos Concluídos: {usuario.get('cursos_concluidos', 'N/A')}")
+            print(f"Tempo Médio de Estudo: {usuario.get('tempo_medio_estudo', 'N/A')} horas/semana")
+            return
+    print("Usuário não encontrado no arquivo de estatísticas.")
 
 def menu():
     """Função para exibir o menu principal."""
