@@ -50,9 +50,10 @@ def menu_login():
                 print("O login e a senha não podem estar vazios. Tente novamente.")
             else:
                 # Verifica o login, senha e role do usuário
-                usuario_role, nome_completo = verificar_acesso(username, senha)
-                if usuario_role:
-                    usuario_logado = nome_completo  # Atualiza a variável global com o nome completo do usuário
+                role, nome_completo = verificar_acesso(username, senha)
+                if role:
+                    usuario_logado = nome_completo # Atualiza a variável global com o nome completo do usuário
+                    usuario_role = role   
                     print(f"Bem-vindo, {usuario_logado}!")
                 else:
                     print("Login ou senha incorretos. Tente novamente.")
@@ -228,7 +229,7 @@ def perguntas_frequentes_lgpd():
         print("3. Como posso corrigir meus dados?")
         print("4. Como posso excluir meus dados?")
         print("0. Voltar ao Menu de Segurança")
-        escolha = input("Escolha uma opção: ").strip()
+        escolha = int(input("Escolha uma opção: ").strip())
         if escolha == 1:
             print("A LGPD é a Lei Geral de Proteção de Dados, que visa garantir a privacidade dos dados pessoais.")
         elif escolha == 2:

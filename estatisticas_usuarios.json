@@ -1,100 +1,102 @@
-[
-  {
-    "username": "ferrh",
-    "idade": 21,
-    "acessos": 17,
-    "tempo_total_min": 672,
-    "cursos_concluidos": 4
-  },
-  {
-    "username": "costl",
-    "idade": 24,
-    "acessos": 39,
-    "tempo_total_min": 571,
-    "cursos_concluidos": 3
-  },
-  {
-    "username": "gomea",
-    "idade": 19,
-    "acessos": 26,
-    "tempo_total_min": 843,
-    "cursos_concluidos": 1
-  },
-  {
-    "username": "marta",
-    "idade": 18,
-    "acessos": 12,
-    "tempo_total_min": 491,
-    "cursos_concluidos": 4
-  },
-  {
-    "username": "barbb",
-    "idade": 20,
-    "acessos": 22,
-    "tempo_total_min": 644,
-    "cursos_concluidos": 1
-  },
-  {
-    "username": "ribeb",
-    "idade": 17,
-    "acessos": 30,
-    "tempo_total_min": 391,
-    "cursos_concluidos": 3
-  },
-  {
-    "username": "almec",
-    "idade": 23,
-    "acessos": 15,
-    "tempo_total_min": 510,
-    "cursos_concluidos": 2
-  },
-  {
-    "username": "meloc",
-    "idade": 22,
-    "acessos": 33,
-    "tempo_total_min": 687,
-    "cursos_concluidos": 4
-  },
-  {
-    "username": "carvc",
-    "idade": 20,
-    "acessos": 27,
-    "tempo_total_min": 578,
-    "cursos_concluidos": 2
-  },
-  {
-    "username": "rochd",
-    "idade": 19,
-    "acessos": 19,
-    "tempo_total_min": 624,
-    "cursos_concluidos": 3
-  },
-  {
-    "username": "diasd",
-    "idade": 18,
-    "acessos": 40,
-    "tempo_total_min": 853,
-    "cursos_concluidos": 5
-  },
-  {
-    "username": "teixe",
-    "idade": 21,
-    "acessos": 13,
-    "tempo_total_min": 312,
-    "cursos_concluidos": 1
-  },
-  {
-    "username": "moref",
-    "idade": 25,
-    "acessos": 29,
-    "tempo_total_min": 739,
-    "cursos_concluidos": 3
-  },
-  {
-    "username": "vieig",
-    "idade": 22,
-    "acessos": 35,
-    "tempo_total_min": 698,
-    "cursos_concluidos": 4
-  }
-]
+{
+    "usuarios": [
+        {
+            "username": "ferrh",
+            "idade": 21,
+            "acessos": 17,
+            "tempo_total_min": 672,
+            "cursos_concluidos": 4
+        },
+        {
+            "username": "costl",
+            "idade": 24,
+            "acessos": 39,
+            "tempo_total_min": 571,
+            "cursos_concluidos": 3
+        },
+        {
+            "username": "gomea",
+            "idade": 19,
+            "acessos": 26,
+            "tempo_total_min": 843,
+            "cursos_concluidos": 1
+        },
+        {
+            "username": "marta",
+            "idade": 18,
+            "acessos": 12,
+            "tempo_total_min": 491,
+            "cursos_concluidos": 4
+        },
+        {
+            "username": "barbb",
+            "idade": 20,
+            "acessos": 22,
+            "tempo_total_min": 644,
+            "cursos_concluidos": 1
+        },
+        {
+            "username": "ribeb",
+            "idade": 17,
+            "acessos": 30,
+            "tempo_total_min": 391,
+            "cursos_concluidos": 3
+        },
+        {
+            "username": "almec",
+            "idade": 23,
+            "acessos": 15,
+            "tempo_total_min": 510,
+            "cursos_concluidos": 2
+        },
+        {
+            "username": "meloc",
+            "idade": 22,
+            "acessos": 33,
+            "tempo_total_min": 687,
+            "cursos_concluidos": 4
+        },
+        {
+            "username": "carvc",
+            "idade": 20,
+            "acessos": 27,
+            "tempo_total_min": 578,
+            "cursos_concluidos": 2
+        },
+        {
+            "username": "rochd",
+            "idade": 19,
+            "acessos": 19,
+            "tempo_total_min": 624,
+            "cursos_concluidos": 3
+        },
+        {
+            "username": "diasd",
+            "idade": 18,
+            "acessos": 40,
+            "tempo_total_min": 853,
+            "cursos_concluidos": 5
+        },
+        {
+            "username": "teixe",
+            "idade": 21,
+            "acessos": 13,
+            "tempo_total_min": 312,
+            "cursos_concluidos": 1
+        },
+        {
+            "username": "moref",
+            "idade": 25,
+            "acessos": 29,
+            "tempo_total_min": 739,
+            "cursos_concluidos": 3
+        },
+        {
+            "username": "vieig",
+            "idade": 22,
+            "acessos": 35,
+            "tempo_total_min": 698,
+            "cursos_concluidos": 4
+        }
+    ]  
+}
