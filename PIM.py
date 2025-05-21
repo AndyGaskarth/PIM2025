@@ -2,6 +2,8 @@ import json
 import statistics
 import bcrypt
 import cryptography
+import datetime
+
 
 # Variável global para armazenar o login do usuário
 usuario_logado = None
@@ -16,38 +18,31 @@ def carregar_acessos():
     """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
     with open("user.json", "r", encoding="utf-8") as user_file:
         # Carrega os dados do arquivo JSON e retorna como um dicionário
-            return json.load(user_file)
-    
-def converter_senhas_para_hash():
-    with open("user.json", "r", encoding="utf-8") as file:
-        dados = json.load(file)
-        
-    for usuario in dados["usuarios"]:
-        senha_texto = usuario["password"]
-        senha_hasheada = bcrypt.hashpw(senha_texto.encode("utf-8"), bcrypt.gensalt())
-        usuario["password"] = senha_hasheada.decode("utf-8")
-
-    with open("user.json", "w", encoding="utf-8") as file:
-        json.dump(dados, file, indent=4, ensure_ascii=False)
-
-print("senhas com hash alteradas com sucesso...")
-
-converter_senhas_para_hash()
+        return json.load(user_file)
 
 def verificar_acesso(usuario, senha):
-    """Função para verificar o login, senha e retornar o tipo de acesso (role) e o nome completo do usuário."""
+    """Verifica o login usando hash com bcrypt"""
     acessos = carregar_acessos()
     for u in acessos["usuarios"]:
-        if u["username"] == usuario and u["password"] == senha:
+        if u["username"] == usuario:
+            senha_armazenada = u["password"]
+            if bcrypt.checkpw(senha.encode('utf-8'), senha_armazenada.encode('utf-8')):
             # Retorna a role e o nome completo do usuário
-            nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
-            return u["role"], nome_completo
+                nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
+                return u["role"], nome_completo
     return None, None  # Retorna None se o login ou senha estiverem incorretos
         
 def cadastrar_usuario():
         """Função para informar sobre o processo de cadastro de um novo usuário."""
         print("=== Cadastro de Novo Usuário ===")
         print("Por gentileza, buscar a secretaria ou seu representante imediato para solicitar o registro de teu acesso.")
+
+        # Futuramente, ao implementar o cadastro pelo sistema, utilizar hash para armazenar a senha :)
+        #senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+
+def registrar_log(usuario_logado):
+    with open("acessos.log", "a", encoding="utf-8") as log:
+        log.write(f"{datetime.now()} - Login: {usuario_logado}\n")
 
 def esqueci_senha():
     """Função para solicitar com a recuperação de senha."""
@@ -80,6 +75,8 @@ def menu_login():
                     global usuario_logado_username
                     usuario_logado_username = username
                     print(f"Bem-vindo, {usuario_role}!")
+                    #registrar logs de cada usuario logado
+                    registrar_log(username)
                 else:
                     print("Login ou senha incorretos. Tente novamente.")
         elif escolha == "0":
