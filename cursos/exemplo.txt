@@ -1,0 +1,47 @@
+Introdução à Programação Front-End
+
+Programar para o front-end significa criar a interface visual de sites e aplicações web, ou seja, tudo aquilo que o usuário vê e interage. As principais tecnologias utilizadas são:
+
+1. HTML (HyperText Markup Language)
+- Estrutura o conteúdo da página.
+- Exemplo:
+    <html>
+        <head>
+            <title>Meu Site</title>
+        </head>
+        <body>
+            <h1>Bem-vindo!</h1>
+            <p>Este é um exemplo de HTML.</p>
+        </body>
+    </html>
+
+2. CSS (Cascading Style Sheets)
+- Responsável pela aparência visual (cores, fontes, espaçamento).
+- Exemplo:
+    <style>
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #007bff;
+        }
+    </style>
+
+3. JavaScript (JS)
+- Adiciona interatividade e dinamismo à página.
+- Exemplo:
+    <script>
+        function mostrarMensagem() {
+            alert('Olá, você clicou no botão!');
+        }
+    </script>
+    <button onclick="mostrarMensagem()">Clique aqui</button>
+
+Dicas para começar:
+- Use editores como VS Code ou Sublime Text.
+- Pratique criando páginas simples e incrementando aos poucos.
+- Consulte a documentação oficial: MDN Web Docs.
+
+Com HTML, CSS e JS você pode criar sites modernos, responsivos e interativos!
