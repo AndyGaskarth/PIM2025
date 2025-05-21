@@ -33,12 +33,12 @@ def verificar_acesso(usuario, senha):
     return None, None  # Retorna None se o login ou senha estiverem incorretos
         
 def cadastrar_usuario():
-        """Função para informar sobre o processo de cadastro de um novo usuário."""
-        print("=== Cadastro de Novo Usuário ===")
-        print("Por gentileza, buscar a secretaria ou seu representante imediato para solicitar o registro de teu acesso.")
+    """Função para informar sobre o processo de cadastro de um novo usuário."""
+    print("=== Cadastro de Novo Usuário ===")
+    print("Por gentileza, buscar a secretaria ou seu representante imediato para solicitar o registro de teu acesso.")
 
-        # Futuramente, ao implementar o cadastro pelo sistema, utilizar hash para armazenar a senha :)
-        #senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+    # Futuramente, ao implementar o cadastro pelo sistema, utilizar hash para armazenar a senha :)
+    #senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
 
 def registrar_log(usuario_logado):
     with open("acessos.log", "a", encoding="utf-8") as log:
