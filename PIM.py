@@ -2,7 +2,7 @@ import json
 import statistics
 import bcrypt
 import cryptography
-import datetime
+from datetime import datetime
 
 
 # Variável global para armazenar o login do usuário
@@ -42,7 +42,7 @@ def cadastrar_usuario():
 
 def registrar_log(usuario_logado):
     with open("acessos.log", "a", encoding="utf-8") as log:
-        log.write(f"{datetime.now()} - Login: {usuario_logado}\n")
+        log.write(f"[{datetime.now()} - Login: {usuario_logado}\n,]")
 
 def esqueci_senha():
     """Função para solicitar com a recuperação de senha."""
