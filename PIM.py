@@ -124,9 +124,16 @@ def alterar_senha():
     print(f"A senha do usuário '{username}' foi alterada com sucesso.")
 
 def front_end_curso():
-    """Exibe o conteúdo de um arquivo .txt na tela."""
     try:
         with open("cursos/front_end.txt", "r", encoding="utf-8") as f:
+            print(f.read())
+    except FileNotFoundError:
+        print("Arquivo de descrição do curso não encontrado.")
+
+def python_curso():
+    """Exibe o conteúdo de um arquivo .txt na tela."""
+    try:
+        with open("cursos/python.txt", "r", encoding="utf-8") as f:
             print(f.read())
     except FileNotFoundError:
         print("Arquivo de descrição do curso não encontrado.")
@@ -148,6 +155,7 @@ def listar_cursos():
             continue
         if escolha == 1:
             print("Curso de Python: Aprenda a programar em Python do básico ao avançado.")
+            python_curso()
         elif escolha == 2:
             print("Curso de Front-End: Crie interfaces modernas para sites e sistemas usando tecnologias essenciais do desenvolvimento web.")
             front_end_curso()

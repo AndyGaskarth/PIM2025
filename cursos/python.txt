@@ -1,0 +1,8 @@
+Python é uma linguagem de programação de alto nível, conhecida por sua simplicidade e legibilidade. Ela é amplamente utilizada em diversas áreas, como desenvolvimento web, análise de dados, automação, inteligência artificial e muito mais. Python possui uma sintaxe clara, o que facilita o aprendizado para iniciantes e permite o desenvolvimento rápido de aplicações.
+
+Exemplo de programação básica em Python:
+
+# Este programa solicita o nome do usuário e exibe uma mensagem de boas-vindas
+
+nome = input("Qual é o seu nome? ")
+print(f"Olá, {nome}! Seja bem-vindo ao mundo do Python.")
