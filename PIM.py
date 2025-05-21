@@ -19,7 +19,9 @@ def carregar_acessos():
             return json.load(user_file)
     
 def converter_senhas_para_hash():
-    dados = carregar_acessos()
+    with open("user.json", "r", encoding="utf-8") as file:
+        dados = json.load(file)
+        
     for usuario in dados["usuarios"]:
         senha_texto = usuario["password"]
         senha_hasheada = bcrypt.hashpw(senha_texto.encode("utf-8"), bcrypt.gensalt())
