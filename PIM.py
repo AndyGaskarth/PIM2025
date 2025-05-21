@@ -1,5 +1,7 @@
 import json
 import statistics
+import bcrypt
+import cryptography
 
 # Variável global para armazenar o login do usuário
 usuario_logado = None
@@ -16,6 +18,22 @@ def carregar_acessos():
         # Carrega os dados do arquivo JSON e retorna como um dicionário
             return json.load(user_file)
     
+def converter_senhas_para_hash():
+    with open("user.json", "r", encoding="utf-8") as file:
+        dados = json.load(file)
+        
+    for usuario in dados["usuarios"]:
+        senha_texto = usuario["password"]
+        senha_hasheada = bcrypt.hashpw(senha_texto.encode("utf-8"), bcrypt.gensalt())
+        usuario["password"] = senha_hasheada.decode("utf-8")
+
+    with open("user.json", "w", encoding="utf-8") as file:
+        json.dump(dados, file, indent=4, ensure_ascii=False)
+
+print("senhas com hash alteradas com sucesso...")
+
+converter_senhas_para_hash()
+
 def verificar_acesso(usuario, senha):
     """Função para verificar o login, senha e retornar o tipo de acesso (role) e o nome completo do usuário."""
     acessos = carregar_acessos()
@@ -73,6 +91,7 @@ def menu_login():
 def alterar_senha():
     """Função para alterar a senha de um usuário (apenas para admins)."""
     global usuario_role
+
     if usuario_role != "admin":
         print("Acesso negado. Apenas administradores podem alterar senhas.")
         return
@@ -91,7 +110,8 @@ def alterar_senha():
     # Procurar o usuário no JSON
     for usuario in acessos["usuarios"]:
         if usuario["username"] == username:
-            usuario["password"] = nova_senha  # Atualizar a senha
+            senha_hash = bcrypt.hashpw(nova_senha.encode('utf-8'), bcrypt.gensalt())
+            usuario["password"] = senha_hash.decode('utf-8')  # Atualizar a senha
             break
     else:
         print("Usuário não encontrado.")
@@ -337,6 +357,8 @@ def estatisticas_usuario():
             print(f"Tempo Médio de Estudo: {usuario.get('tempo_medio_estudo', 'N/A')} horas/semana")
             return
     print("Usuário não encontrado no arquivo de estatísticas.")
+
+    #função para gerar hash de cada senha
 
 def menu():
     """Função para exibir o menu principal."""
