@@ -103,6 +103,13 @@ def alterar_senha():
 
     print(f"A senha do usuário '{username}' foi alterada com sucesso.")
 
+def front_end_curso():
+    """Exibe o conteúdo de um arquivo .txt na tela."""
+    try:
+        with open("cursos/front_end.txt", "r", encoding="utf-8") as f:
+            print(f.read())
+    except FileNotFoundError:
+        print("Arquivo de descrição do curso não encontrado.")
 
 def listar_cursos():
     """Função para listar todos os cursos disponíveis."""
@@ -123,6 +130,7 @@ def listar_cursos():
             print("Curso de Python: Aprenda a programar em Python do básico ao avançado.")
         elif escolha == 2:
             print("Curso de Front-End: Crie interfaces modernas para sites e sistemas usando tecnologias essenciais do desenvolvimento web.")
+            front_end_curso()
         elif escolha == 3:
             print("Curso de Banco de Dados: Aprenda a modelar, criar e manipular bancos de dados com SQL.")
         elif escolha == 4:
@@ -168,6 +176,7 @@ def ultimo_curso_assistido():
     """Função para exibir o último curso assistido."""
     print("=== Último Curso Assistido ===")
     print("Nenhum curso assistido registrado.")
+
 
 def menu_seguranca():
     while True:
