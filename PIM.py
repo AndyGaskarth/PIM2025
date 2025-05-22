@@ -67,12 +67,11 @@ def carregar_acessos():
         dados_vazios_para_inicio = {"usuarios": []}
         salvar_acessos(dados_vazios_para_inicio) # <-- Precisamos dessa função também!
         return dados_vazios_para_inicio # Retorna os dados vazios para o programa usar
-    
     try:
         with open(nome_do_arquivo_trancado, "rb") as arquivo_trancado:
             conteudo_misturado = arquivo_trancado.read()
-
             dados_descriptografados = descriptografar_json(conteudo_misturado, chave_secreta_json)
+            print("DEBUG - Dados carregados:", dados_descriptografados)  # ← Adicione isso aqui
             return dados_descriptografados
         
     except Exception as e:
@@ -82,6 +81,35 @@ def carregar_acessos():
         dados_vazios_para_inicio = {"usuarios": []}
         salvar_acessos(dados_vazios_para_inicio)
         return dados_vazios_para_inicio
+    
+def criptografar_arquivo_json_existente():
+    """
+    Essa função carrega o arquivo user.json original (sem criptografia),
+    criptografa com a chave existente, e salva como user.json.enc.
+    """
+    arquivo_original = "user.json"
+    arquivo_criptografado = "user.json.enc"
+
+    if not os.path.exists(arquivo_original):
+        print(f"Arquivo '{arquivo_original}' não encontrado.")
+        return
+
+    try:
+        # 1. Carrega os dados do JSON original
+        with open(arquivo_original, "r", encoding="utf-8") as f:
+            dados = json.load(f)
+
+        # 2. Criptografa os dados usando sua função existente
+        conteudo_misturado = criptografar_json(dados, chave_secreta_json)
+
+        # 3. Salva no novo arquivo criptografado
+        with open(arquivo_criptografado, "wb") as f:
+            f.write(conteudo_misturado)
+
+        print(f"✅ Arquivo '{arquivo_criptografado}' criado com sucesso a partir de '{arquivo_original}'.")
+
+    except Exception as e:
+        print(f"❌ Erro ao criptografar o arquivo: {e}")
 
 def verificar_acesso(usuario, senha):
     """Verifica o login usando hash com bcrypt"""
@@ -466,3 +494,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    criptografar_arquivo_json_existente()
