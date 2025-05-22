@@ -59,6 +59,7 @@ def menu_login():
     while not usuario_logado:
         print("=== Página de Login ===")
         print("1. Fazer Login")
+        print("2. Esqueci minha senha")
         print("0. Sair")
         escolha = input("Escolha uma opção: ").strip()
         if escolha == "1":
@@ -79,6 +80,8 @@ def menu_login():
                     registrar_log(username)
                 else:
                     print("Login ou senha incorretos. Tente novamente.")
+        elif escolha == "2":
+            esqueci_senha()
         elif escolha == "0":
             print("Saindo...")
             exit()
@@ -377,6 +380,38 @@ def estatisticas_usuario():
 
     #função para gerar hash de cada senha
 
+def exportar_dados(campo, valor=None):
+    """Função para exportar os dados do usuário logado."""
+    global usuario_logado, usuario_logado_username
+    if not usuario_logado or not usuario_logado_username:
+        print("Nenhum usuário está logado.")
+        return
+
+    # Tenta abrir o arquivo JSON com os dados dos usuários
+    try:
+        with open("user.json", "w", encoding="utf-8") as f:
+            dados = json.load(f)
+    except FileNotFoundError:
+        print("Arquivo de dados não encontrado.")
+        return
+
+    encontrados = []
+    for usuario in dados.get("usuarios", []):
+        if valor is None or str(usuario.get(campo, "")).lower() == str(valor).lower():
+            encontrados.append(usuario)
+
+    if not encontrados:
+        print("Nenhum usuário encontrado com esse critério.")
+        return
+
+    for usuario in encontrados:
+        print("-" * 30)
+        print(f"Nome: {usuario.get('firstName', 'N/A')}")
+        print(f"Sobrenome: {usuario.get('lastName', 'N/A')}")
+        print(f"Idade: {usuario.get('idade', 'N/A')}")
+        print(f"RA: {usuario.get('ra', 'N/A')}")
+        print("-" * 30)
+
 def menu():
     """Função para exibir o menu principal."""
     global usuario_logado, usuario_role
@@ -388,6 +423,7 @@ def menu():
     if usuario_role == "admin":
         print("4. Gerenciar Usuários")
         print("5. Alterar Senha de Usuário")
+        print("6. Exportar informações do Usuário")
     print("0. Sair")
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
@@ -400,6 +436,9 @@ def menu():
         print("Acesso ao Gerenciamento de Usuários.")
     elif escolha == "5" and usuario_role == "admin":
         alterar_senha()
+    elif escolha == "6" and usuario_role == "admin":
+        print("Exportando informações do usuário...")
+        # Aqui você pode implementar a lógica para exportar as informações do usuário
     elif escolha == "0":
         print("Saindo...")
         exit()
