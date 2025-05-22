@@ -4,6 +4,8 @@ import bcrypt
 from cryptography.fernet import Fernet
 import os
 from datetime import datetime
+import openpyxl 
+from tkinter import Tk, filedialog
 
 
 # Variável global para armazenar o login do usuário
@@ -380,16 +382,12 @@ def estatisticas_usuario():
 
     #função para gerar hash de cada senha
 
-def exportar_dados(campo, valor=None):
-    """Função para exportar os dados do usuário logado."""
-    global usuario_logado, usuario_logado_username
-    if not usuario_logado or not usuario_logado_username:
-        print("Nenhum usuário está logado.")
-        return
 
-    # Tenta abrir o arquivo JSON com os dados dos usuários
+
+def exportar_dados_xlsx(campo, valor=None):
+    """Exporta dados filtrados para um arquivo Excel (.xlsx) em local escolhido pelo usuário."""
     try:
-        with open("user.json", "w", encoding="utf-8") as f:
+        with open("user.json", "r", encoding="utf-8") as f:
             dados = json.load(f)
     except FileNotFoundError:
         print("Arquivo de dados não encontrado.")
@@ -404,13 +402,80 @@ def exportar_dados(campo, valor=None):
         print("Nenhum usuário encontrado com esse critério.")
         return
 
+    # Cria a planilha
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Usuários"
+
+    # Cabeçalho
+    ws.append(["Nome", "Sobrenome", "Idade", "RA"])
+
+    # Dados
     for usuario in encontrados:
-        print("-" * 30)
-        print(f"Nome: {usuario.get('firstName', 'N/A')}")
-        print(f"Sobrenome: {usuario.get('lastName', 'N/A')}")
-        print(f"Idade: {usuario.get('idade', 'N/A')}")
-        print(f"RA: {usuario.get('ra', 'N/A')}")
-        print("-" * 30)
+        ws.append([
+            usuario.get('firstName', 'N/A'),
+            usuario.get('lastName', 'N/A'),
+            usuario.get('idade', 'N/A'),
+            usuario.get('ra', 'N/A')
+        ])
+
+    # Abre janela para escolher onde salvar
+    Tk().withdraw()  # Oculta a janela principal do Tkinter
+    caminho = filedialog.asksaveasfilename(
+        defaultextension=".xlsx",
+        filetypes=[("Planilha Excel", "*.xlsx")],
+        title="Salvar como"
+    )
+    if caminho:
+        wb.save(caminho)
+        print(f"Arquivo salvo em: {caminho}")
+    else:
+        print("Exportação cancelada.")
+
+def exportar_alunos_xlsx():
+    """Exporta dados de todos os usuários com role 'aluno' para um arquivo Excel (.xlsx) em local escolhido pelo usuário."""
+    try:
+        with open("user.json", "r", encoding="utf-8") as f:
+            dados = json.load(f)
+    except FileNotFoundError:
+        print("Arquivo de dados não encontrado.")
+        return
+
+    alunos = [u for u in dados.get("usuarios", []) if u.get("role", "").lower() == "aluno"]
+
+    if not alunos:
+        print("Nenhum aluno encontrado.")
+        return
+
+    # Cria a planilha
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Alunos"
+
+    # Cabeçalho
+    ws.append(["Nome", "Sobrenome", "Idade", "RA"])
+
+    # Dados
+    for usuario in alunos:
+        ws.append([
+            usuario.get('firstName', 'N/A'),
+            usuario.get('lastName', 'N/A'),
+            usuario.get('idade', 'N/A'),
+            usuario.get('ra', 'N/A')
+        ])
+
+    # Abre janela para escolher onde salvar
+    Tk().withdraw()  # Oculta a janela principal do Tkinter
+    caminho = filedialog.asksaveasfilename(
+        defaultextension=".xlsx",
+        filetypes=[("Planilha Excel", "*.xlsx")],
+        title="Salvar como"
+    )
+    if caminho:
+        wb.save(caminho)
+        print(f"Arquivo salvo em: {caminho}")
+    else:
+        print("Exportação cancelada.")
 
 def menu():
     """Função para exibir o menu principal."""
@@ -438,6 +503,7 @@ def menu():
         alterar_senha()
     elif escolha == "6" and usuario_role == "admin":
         print("Exportando informações do usuário...")
+        exportar_alunos_xlsx("username")
         # Aqui você pode implementar a lógica para exportar as informações do usuário
     elif escolha == "0":
         print("Saindo...")
