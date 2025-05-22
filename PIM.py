@@ -133,10 +133,10 @@ def front_end_curso(linhas_por_pagina=5):
             total_linhas = len(linhas)
             pagina = 0
             while pagina * linhas_por_pagina < total_linhas:
-                inicio = pagina * linhas_por_pagina
-                fim = inicio + linhas_por_pagina
+                inicio = (pagina - 1)* linhas_por_pagina
+                fim = min(inicio + linhas_por_pagina)
                 for linha in linhas[inicio:fim]:
-                    print(linha, end='')
+                    print(f"Página {pagina}", end='')
                 pagina += 1
                 if fim < total_linhas:
                     input("\nPressione Enter para continuar...")
@@ -223,6 +223,7 @@ def ultimo_curso_assistido():
 def menu_seguranca():
     while True:
         """Menu principal de segurança (LGPD)."""
+        print("\n=== Menu de Segurança e Privacidade ===")
         print("1. Ver Informações sobre a LGPD")
         print("2. Perguntas Frequentes sobre LGPD")
         print("3. Seus Direitos como Usuário")
