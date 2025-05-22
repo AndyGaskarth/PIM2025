@@ -120,10 +120,22 @@ def alterar_senha():
 
     print(f"A senha do usuário '{username}' foi alterada com sucesso.")
 
-def front_end_curso():
+def front_end_curso(linhas_por_pagina=5):
     try:
         with open("cursos/front_end.txt", "r", encoding="utf-8") as f:
             print(f.read())
+            linhas = f.readlines()
+            total_linhas = len(linhas)
+            pagina = 0
+            while pagina * linhas_por_pagina < total_linhas:
+                inicio = pagina * linhas_por_pagina
+                fim = inicio + linhas_por_pagina
+                for linha in linhas[inicio:fim]:
+                    print(linha, end='')
+                pagina += 1
+                if fim < total_linhas:
+                    input("\nPressione Enter para continuar...")
+                
     except FileNotFoundError:
         print("Arquivo de descrição do curso não encontrado.")
 
@@ -151,10 +163,10 @@ def listar_cursos():
             print("Entrada inválida. Por favor, digite um número.")
             continue
         if escolha == 1:
-            print("Curso de Python: Aprenda a programar em Python do básico ao avançado.")
+            print("\n=== Curso de Python: Aprenda a programar em Python do básico ao avançado. ===")
             python_curso()
         elif escolha == 2:
-            print("Curso de Front-End: Crie interfaces modernas para sites e sistemas usando tecnologias essenciais do desenvolvimento web.")
+            print("\n=== Curso de Front-End: Crie interfaces modernas para sites e sistemas usando tecnologias essenciais do desenvolvimento web ===.")
             front_end_curso()
         elif escolha == 3:
             print("Curso de Banco de Dados: Aprenda a modelar, criar e manipular bancos de dados com SQL.")
