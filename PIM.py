@@ -1,7 +1,8 @@
 import json
 import statistics
 import bcrypt
-import cryptography
+from cryptography.fernet import Fernet
+import os
 from datetime import datetime
 
 
@@ -13,13 +14,12 @@ usuario_role = None
 # Armazena o nome de usuário do usuário atualmente logado, fiz isso porque não tava indo no menu de estatisticas :(
 usuario_logado_username = None
 
-
 def carregar_acessos():
     """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
     with open("user.json", "r", encoding="utf-8") as user_file:
         # Carrega os dados do arquivo JSON e retorna como um dicionário
         return json.load(user_file)
-
+    
 def verificar_acesso(usuario, senha):
     """Verifica o login usando hash com bcrypt"""
     acessos = carregar_acessos()
@@ -31,7 +31,7 @@ def verificar_acesso(usuario, senha):
                 nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
                 return u["role"], nome_completo
     return None, None  # Retorna None se o login ou senha estiverem incorretos
-        
+
 def cadastrar_usuario():
     """Função para informar sobre o processo de cadastro de um novo usuário."""
     print("=== Cadastro de Novo Usuário ===")
@@ -42,7 +42,7 @@ def cadastrar_usuario():
 
 def registrar_log(usuario_logado):
     with open("acessos.log", "a", encoding="utf-8") as log:
-        log.write(f"[{datetime.now()} - Login: {usuario_logado}\n,]")
+        log.write(f"{datetime.now()} - Login: {usuario_logado}\n")
 
 def esqueci_senha():
     """Função para solicitar com a recuperação de senha."""
