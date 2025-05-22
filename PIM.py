@@ -14,103 +14,12 @@ usuario_role = None
 # Armazena o nome de usuário do usuário atualmente logado, fiz isso porque não tava indo no menu de estatisticas :(
 usuario_logado_username = None
 
-def carregar_chave_json():
-    try:
-        return open("chave_secreta.key", "rb").read()
-    except FileNotFoundError:
-        print("Erro: Arquivo 'chave_secreta.key' não encontrado. Gere a chave primeiro.")
-        exit() # Sai do programa se a chave não existir, pois não é possível prosseguir
-
-chave_secreta_json = carregar_chave_json()
-
-def criptografar_json(dados_json, chave):
-    f = Fernet(chave)
-    # Converte o dicionário Python para uma string JSON, depois para bytes
-    dados_bytes = json.dumps(dados_json, indent=4, ensure_ascii=False).encode('utf-8')
-    dados_criptografados = f.encrypt(dados_bytes)
-    return dados_criptografados
-
-def descriptografar_json(dados_criptografados, chave):
-    """Descriptografa os dados JSON."""
-    f = Fernet(chave)
-    dados_descriptografados = f.decrypt(dados_criptografados)
-    # Converte os bytes descriptografados de volta para uma string, e depois para um dicionário Python
-    return json.loads(dados_descriptografados.decode('utf-8'))
-
-def salvar_acessos(dados_para_salvar):
-    """
-    Função para salvar os acessos dos usuários em um arquivo JSON criptografado.
-    """
-    nome_do_arquivo_trancado = "user.json.enc"
-
-    try:
-        # Pega os dados organizados e usa sua função criptografar_dados_json para "misturá-los"
-        conteudo_misturado = criptografar_json(dados_para_salvar, chave_secreta_json)
-
-        # Abre o arquivo "trancado" em modo de escrita binária ('wb') e salva o conteúdo misturado
-        with open(nome_do_arquivo_trancado, "wb") as arquivo_trancado:
-            arquivo_trancado.write(conteudo_misturado)
-        # print("Dados de usuários salvos e trancados com sucesso!") # Opcional: para ver no console
-
-    except Exception as e:
-        print(f"ERRO ao salvar ou trancar '{nome_do_arquivo_trancado}': {e}")
-
 def carregar_acessos():
-    """Função para carregar os acessos dos usuários a partir de um arquivo JSON criptografado.
-    Se o arquivo criptografado não existir ou houver um erro,
-    ele tenta criar um novo arquivo de usuários criptografado e retorna dados vazios."""
-    nome_do_arquivo_trancado = "user.json.enc"
-
-    if not os.path.exists(nome_do_arquivo_trancado):
-        print(f"Arquivo '{nome_do_arquivo_trancado}' não encontrado.")
-        print("Criando um novo arquivo de usuários criptografado inicial.")
-        dados_vazios_para_inicio = {"usuarios": []}
-        salvar_acessos(dados_vazios_para_inicio) # <-- Precisamos dessa função também!
-        return dados_vazios_para_inicio # Retorna os dados vazios para o programa usar
-    try:
-        with open(nome_do_arquivo_trancado, "rb") as arquivo_trancado:
-            conteudo_misturado = arquivo_trancado.read()
-            dados_descriptografados = descriptografar_json(conteudo_misturado, chave_secreta_json)
-            print("DEBUG - Dados carregados:", dados_descriptografados)  # ← Adicione isso aqui
-            return dados_descriptografados
-        
-    except Exception as e:
-        print(f"ERRO ao carregar ou destrancar '{nome_do_arquivo_trancado}': {e}")
-        print("Isso pode significar que o arquivo está corrompido ou a chave está errada.")
-        print("Criando um novo arquivo criptografado para evitar que o programa pare.")
-        dados_vazios_para_inicio = {"usuarios": []}
-        salvar_acessos(dados_vazios_para_inicio)
-        return dados_vazios_para_inicio
+    """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
+    with open("user.json", "r", encoding="utf-8") as user_file:
+        # Carrega os dados do arquivo JSON e retorna como um dicionário
+        return json.load(user_file)
     
-def criptografar_arquivo_json_existente():
-    """
-    Essa função carrega o arquivo user.json original (sem criptografia),
-    criptografa com a chave existente, e salva como user.json.enc.
-    """
-    arquivo_original = "user.json"
-    arquivo_criptografado = "user.json.enc"
-
-    if not os.path.exists(arquivo_original):
-        print(f"Arquivo '{arquivo_original}' não encontrado.")
-        return
-
-    try:
-        # 1. Carrega os dados do JSON original
-        with open(arquivo_original, "r", encoding="utf-8") as f:
-            dados = json.load(f)
-
-        # 2. Criptografa os dados usando sua função existente
-        conteudo_misturado = criptografar_json(dados, chave_secreta_json)
-
-        # 3. Salva no novo arquivo criptografado
-        with open(arquivo_criptografado, "wb") as f:
-            f.write(conteudo_misturado)
-
-        print(f"✅ Arquivo '{arquivo_criptografado}' criado com sucesso a partir de '{arquivo_original}'.")
-
-    except Exception as e:
-        print(f"❌ Erro ao criptografar o arquivo: {e}")
-
 def verificar_acesso(usuario, senha):
     """Verifica o login usando hash com bcrypt"""
     acessos = carregar_acessos()
@@ -133,7 +42,7 @@ def cadastrar_usuario():
 
 def registrar_log(usuario_logado):
     with open("acessos.log", "a", encoding="utf-8") as log:
-        log.write(f"[{datetime.now()} - Login: {usuario_logado}\n,]")
+        log.write(f"{datetime.now()} - Login: {usuario_logado}\n")
 
 def esqueci_senha():
     """Função para solicitar com a recuperação de senha."""
@@ -494,4 +403,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    criptografar_arquivo_json_existente()
