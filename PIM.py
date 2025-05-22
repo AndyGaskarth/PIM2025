@@ -14,8 +14,6 @@ usuario_role = None
 # Armazena o nome de usuário do usuário atualmente logado, fiz isso porque não tava indo no menu de estatisticas :(
 usuario_logado_username = None
 
-#chave para carregar acesso
-
 def carregar_chave_json():
     try:
         return open("chave_secreta.key", "rb").read()
