@@ -16,28 +16,81 @@ usuario_role = None
 # Armazena o nome de usuário do usuário atualmente logado, fiz isso porque não tava indo no menu de estatisticas 
 usuario_logado_username = None
 
-def carregar_acessos():
-    """Função para carregar os acessos dos usuários a partir de um arquivo JSON."""
-    with open("user.json", "r", encoding="utf-8") as user_file:
-        # Carrega os dados do arquivo JSON e retorna como um dicionário
-        return json.load(user_file)
-    
-def verificar_acesso(usuario, senha):
-    """Verifica o login usando hash com bcrypt"""
-    acessos = carregar_acessos()
-    for u in acessos["usuarios"]:
-        if u["username"] == usuario:
-            senha_armazenada = u["password"]
-            if bcrypt.checkpw(senha.encode('utf-8'), senha_armazenada.encode('utf-8')):
-            # Retorna a role e o nome completo do usuário
-                nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
-                return u["role"], nome_completo
-    return None, None  # Retorna None se o login ou senha estiverem incorretos
+campos_sensiveis = ["firstName", "lastName", "idade"]
 
+def carregar_chave():
+    with open("chave.key", "rb") as arquivo_chave:
+        chave = arquivo_chave.read()  # lê a chave já existente no arquivo
+    cipher = Fernet(chave)  # cria o objeto Fernet com essa chave
+    return cipher  # retorna o objeto para criptografar/descriptografar
+
+def descriptografar_campos(usuario, campos_sensiveis, cipher):
+    """Descriptografa os campos sensíveis de um usuário.
+       Os campos não sensíveis são retornados como estão.
+    """
+    usuario_descriptografado = usuario.copy() # Cria uma cópia para não modificar o original
+
+    for campo in campos_sensiveis: # Itera APENAS sobre os campos que DEVEM ser sensíveis
+        if campo in usuario_descriptografado: # Verifica se o campo existe no dicionário do usuário
+            try:
+                # O valor a ser descriptografado é o valor do campo atual do usuário
+                valor_criptografado = usuario_descriptografado[campo]
+
+                # Garante que o valor é uma string codificada em bytes antes de descriptografar
+                # Fernet espera bytes, e seus dados podem estar como string na leitura do JSON.
+                # Se já estiverem em bytes, .encode() não causa problemas.
+                valor_original_bytes = cipher.decrypt(valor_criptografado.encode('utf-8'))
+                valor_original = valor_original_bytes.decode('utf-8')
+
+                # Se for um número como idade, converte de volta para int
+                if campo == "idade":
+                    valor_original = int(valor_original)
+                
+                usuario_descriptografado[campo] = valor_original
+            except Exception as e:
+                # É importante ser mais específico com o erro aqui para não mascarar outros problemas.
+                # Por exemplo, InvalidToken se a descriptografia falhar.
+                print(f"Erro ao descriptografar o campo '{campo}' para o usuário (ou dado inválido): {e}")
+                # Opcional: Manter o valor criptografado ou definir como None/default se a descriptografia falhou
+                # usuario_descriptografado[campo] = None 
+                # ou manter o valor criptografado:
+                # usuario_descriptografado[campo] = usuario[campo] 
+    return usuario_descriptografado
+
+def carregar_acessos():
+    """Carrega os acessos dos usuários a partir de um JSON e descriptografa os campos sensíveis."""
+    cipher = carregar_chave()
+    try:
+        with open("user.json", "r", encoding="utf-8") as user_file:
+            # Carrega os dados do arquivo JSON e retorna como um dicionário
+            dados = json.load(user_file)
+
+        if "usuarios" in dados and type(dados["usuarios"]) is list:
+            dados["usuarios"] = [
+                descriptografar_campos(usuario, campos_sensiveis, cipher)
+                for usuario in dados["usuarios"]
+            ]    
+        else:
+            print("Erro: A chave 'usuarios' não existe ou não contém uma lista.")
+            # Retorna um dicionário vazio ou estrutura padrão em caso de erro na estrutura
+            return {"usuarios": []} # Retorne uma estrutura válida para evitar erros posteriores
+
+        return dados # <<< ESTA É A LINHA CRÍTICA ADICIONADA/CORRIGIDA
+    except FileNotFoundError:
+        print("Erro: Arquivo 'user.json' não encontrado. Certifique-se de que ele existe.")
+        return {"usuarios": []} # Retorna uma estrutura vazia para evitar erros
+    except json.JSONDecodeError:
+        print("Erro: O arquivo 'user.json' não é um JSON válido. Verifique o conteúdo.")
+        return {"usuarios": []} # Retorna uma estrutura vazia para evitar erros
+    
 def cadastrar_usuario():
-    """Função para informar sobre o processo de cadastro de um novo usuário."""
+    """Função para informar sobre o processo de cadastro de um novo usuário conforme a LGPD."""
     print("=== Cadastro de Novo Usuário ===")
-    print("Por gentileza, buscar a secretaria ou seu representante imediato para solicitar o registro de teu acesso.")
+    print("A fim de garantir a segurança e a conformidade com a Lei Geral de Proteção de Dados (LGPD),")
+    print("o cadastro de novos usuários deve ser realizado exclusivamente pela secretaria ou por um representante autorizado.")
+    print("Durante o processo de registro, será solicitado o seu consentimento para o uso de dados pessoais,")
+    print("os quais serão utilizados apenas para fins educacionais e de gestão da plataforma.")
+    print("Caso tenha dúvidas, procure seu coordenador ou responsável pelo setor administrativo.")
 
     # Futuramente, ao implementar o cadastro pelo sistema, utilizar hash para armazenar a senha :)
     #senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
@@ -324,7 +377,10 @@ def estatisticas_gerais():
     print("\n====== ESTATÍSTICAS GERAIS ======")
 
     acessos = carregar_acessos()
-    alunos = [u for u in acessos["usuarios"] if u.get('role') == 'aluno']
+    alunos = [
+        u for u in acessos["usuarios"]
+        if u.get('role') == 'aluno' and u.get("consentimento") is True
+    ]
 
     total_alunos = len(alunos)
     total_acessos = sum(u.get('acessos', 0) for u in alunos)
