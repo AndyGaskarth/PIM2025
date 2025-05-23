@@ -10,7 +10,8 @@
             "acessos": 320,
             "cursos_concluidos": 8,
             "ultimo_curso": "Gestão de Plataformas",
-            "media_semanal": 22
+            "media_semanal": 22,
+            "consentimento": true
         },
         {
             "username": "sousa",
@@ -22,7 +23,8 @@
             "acessos": 210,
             "cursos_concluidos": 5,
             "ultimo_curso": "Estatística para Educação",
-            "media_semanal": 15
+            "media_semanal": 15,
+            "consentimento": true
         },
         {
             "username": "carvr",
@@ -34,7 +36,8 @@
             "acessos": 198,
             "cursos_concluidos": 6,
             "ultimo_curso": "Liderança Educacional",
-            "media_semanal": 14
+            "media_semanal": 14,
+            "consentimento": true
         },
         {
             "username": "ferrh",
@@ -47,7 +50,8 @@
             "acessos": 75,
             "cursos_concluidos": 2,
             "ultimo_curso": "Python Básico",
-            "media_semanal": 7
+            "media_semanal": 7,
+            "consentimento": true
         },
         {
             "username": "costl",
@@ -60,7 +64,8 @@
             "acessos": 68,
             "cursos_concluidos": 1,
             "ultimo_curso": "Introdução à Lógica",
-            "media_semanal": 5
+            "media_semanal": 5,
+            "consentimento": true
         },
         {
             "username": "gomea",
@@ -73,7 +78,8 @@
             "acessos": 80,
             "cursos_concluidos": 2,
             "ultimo_curso": "HTML e CSS",
-            "media_semanal": 8
+            "media_semanal": 8,
+            "consentimento": true
         },
         {
             "username": "marta",
@@ -86,7 +92,8 @@
             "acessos": 90,
             "cursos_concluidos": 3,
             "ultimo_curso": "Front-End Intermediário",
-            "media_semanal": 9
+            "media_semanal": 9,
+            "consentimento": true
         },
         {
             "username": "barbb",
@@ -99,7 +106,8 @@
             "acessos": 70,
             "cursos_concluidos": 1,
             "ultimo_curso": "Back-End Básico",
-            "media_semanal": 6
+            "media_semanal": 6,
+            "consentimento": true
         },
         {
             "username": "ribeb",
@@ -112,7 +120,8 @@
             "acessos": 65,
             "cursos_concluidos": 2,
             "ultimo_curso": "Git e GitHub",
-            "media_semanal": 6
+            "media_semanal": 6,
+            "consentimento": true
         },
         {
             "username": "almec",
@@ -125,7 +134,8 @@
             "acessos": 82,
             "cursos_concluidos": 3,
             "ultimo_curso": "Banco de Dados",
-            "media_semanal": 8
+            "media_semanal": 8,
+            "consentimento": true
         },
         {
             "username": "meloc",
@@ -138,7 +148,8 @@
             "acessos": 78,
             "cursos_concluidos": 2,
             "ultimo_curso": "Redes de Computadores",
-            "media_semanal": 7
+            "media_semanal": 7,
+            "consentimento": true
         },
         {
             "username": "carvc",
@@ -151,7 +162,8 @@
             "acessos": 85,
             "cursos_concluidos": 3,
             "ultimo_curso": "Cibersegurança Básica",
-            "media_semanal": 8
+            "media_semanal": 8,
+            "consentimento": true
         },
         {
             "username": "rochd",
@@ -164,7 +176,8 @@
             "acessos": 95,
             "cursos_concluidos": 3,
             "ultimo_curso": "LGPD e Privacidade",
-            "media_semanal": 10
+            "media_semanal": 10,
+            "consentimento": true
         },
         {
             "username": "diasd",
@@ -177,7 +190,8 @@
             "acessos": 100,
             "cursos_concluidos": 4,
             "ultimo_curso": "Python Avançado",
-            "media_semanal": 10
+            "media_semanal": 10,
+            "consentimento": true
         },
         {
             "username": "teixe",
@@ -190,7 +204,8 @@
             "acessos": 60,
             "cursos_concluidos": 1,
             "ultimo_curso": "Lógica de Programação",
-            "media_semanal": 5
+            "media_semanal": 5,
+            "consentimento": true
         },
         {
             "username": "moref",
@@ -203,7 +218,8 @@
             "acessos": 87,
             "cursos_concluidos": 3,
             "ultimo_curso": "Desenvolvimento Web",
-            "media_semanal": 9
+            "media_semanal": 9,
+            "consentimento": true
         },
         {
             "username": "vieig",
@@ -216,7 +232,8 @@
             "acessos": 92,
             "cursos_concluidos": 3,
             "ultimo_curso": "Estatística Aplicada",
-            "media_semanal": 10
+            "media_semanal": 10,
+            "consentimento": true
         }
     ]
 }
