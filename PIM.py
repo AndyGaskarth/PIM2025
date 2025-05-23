@@ -307,7 +307,7 @@ def menu_estatisticas():
     while True:
         print("=== Estatísticas do Usuário  ===")
         print("1. Ver Estatísticas Gerais da Plataforma")
-        print("2. Ver Meu Desempenho (usuário logado)")
+        print("2. Ver Meu Desempenho")
         print("0. Voltar ao Menu Principal")
         escolha = int(input("Escolha uma opção: ").strip())
 
@@ -337,14 +337,14 @@ def estatisticas_gerais():
     aluno_menos_ativo = min(alunos, key=lambda u: u.get('acessos', 0), default=None)
 
     if aluno_mais_ativo:
-        print(f"Aluno mais ativo: {aluno_mais_ativo.get('firstName', '')} {aluno_mais_ativo.get('lastName', '')} ({aluno_mais_ativo.get('acessos', 0)} acessos)")
+        print(f"Maior número de acessos por um aluno: {aluno_mais_ativo.get('acessos', 0)} acessos")
     else:
-        print("Nenhum aluno ativo encontrado.")
+        print("Não há registros de acessos de alunos.")
 
     if aluno_menos_ativo:
-        print(f"Aluno menos ativo: {aluno_menos_ativo.get('firstName', '')} {aluno_menos_ativo.get('lastName', '')} ({aluno_menos_ativo.get('acessos', 0)} acessos)")
+         print(f"Menor número de acessos por um aluno: {aluno_menos_ativo.get('acessos', 0)} acessos")
     else:
-        print("Nenhum aluno ativo encontrado.")
+        print("Não há registros de acessos de alunos.")
 
     print(f"Total de alunos: {total_alunos}")
     print(f"Total de acessos: {total_acessos}")
@@ -357,7 +357,7 @@ def estatisticas_usuario():
     """Exibe as estatísticas do usuário atualmente logado. Os dados são carregados a partir do arquivo 'user.json'."""
     global usuario_logado, usuario_logado_username, usuario_role
         
-    if not usuario_logado or not usuario_logado_username:
+    if 'usuario_logado' not in globals() or not usuario_logado:
         print("Nenhum usuário está logado.")
         return
 
@@ -371,13 +371,13 @@ def estatisticas_usuario():
     
     # Procura os dados do usuário logado no JSON
     for usuario in dados["usuarios"]:
-        if usuario.get("username") in [usuario_logado_username, usuario_role]:
+        if usuario.get("username") == usuario_logado_username:
             print("\n=== Estatísticas do Usuário ===")
             print(f"Nome: {usuario_logado}")
             print(f"Idade: {usuario.get('idade', 'N/A')}")
             print(f"Acessos: {usuario.get('acessos', 'N/A')}")
             print(f"Cursos Concluídos: {usuario.get('cursos_concluidos', 'N/A')}")
-            print(f"Tempo Médio de Estudo: {usuario.get('media_semanal', 'N/A')} horas/semana")
+            print(f"Tempo Médio de Estudo Semanal: {usuario.get('media_semanal', 'N/A')} Horas na Semana")
             return
     print("Usuário não encontrado no arquivo de estatísticas.")
 
