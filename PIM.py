@@ -487,9 +487,7 @@ def menu():
     print("2. Segurança e Privacidade")
     print("3. Estatísticas Do Usuário")
     if usuario_role == "admin":
-        print("4. Gerenciar Usuários")
-        print("5. Alterar Senha de Usuário")
-        print("6. Exportar informações do Usuário")
+        print("4. Menu de Gerenciamento de Usuários")
     print("0. Sair")
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
@@ -499,18 +497,30 @@ def menu():
     elif escolha == "3":
         menu_estatisticas()
     elif escolha == "4" and usuario_role == "admin":
-        print("Acesso ao Gerenciamento de Usuários.")
-    elif escolha == "5" and usuario_role == "admin":
-        alterar_senha()
-    elif escolha == "6" and usuario_role == "admin":
-        print("Exportando informações do usuário...")
-        exportar_alunos_xlsx("username")
+        menu_admin()
         # Aqui você pode implementar a lógica para exportar as informações do usuário
     elif escolha == "0":
         print("Saindo...")
         exit()
     else:
         print("Opção inválida ou acesso negado.")
+
+def menu_admin():
+    print("=== Menu Admin ===")
+    print("1. Gerenciar Usuários")
+    print("2. Alterar Senha de Usuário")
+    print("3. Exportar informações do Usuário")
+    escolha = input("Escolha uma opção: ")
+    if escolha == "1" and usuario_role == "admin":
+        print("Gerenciando Usuários...")
+        # Aqui você pode implementar a lógica para gerenciar usuários
+    elif escolha == "2"and usuario_role == "admin":
+        alterar_senha()
+    elif escolha == "3"and usuario_role == "admin":
+        print("Exportando informações do usuário...")
+        exportar_alunos_xlsx("username")
+    else:
+        print("Opção inválida.")
     
 
 def main():
