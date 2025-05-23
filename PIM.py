@@ -35,26 +35,15 @@ def descriptografar_campos(usuario, campos_sensiveis, cipher):
             try:
                 # O valor a ser descriptografado é o valor do campo atual do usuário
                 valor_criptografado = usuario_descriptografado[campo]
-
-                # Garante que o valor é uma string codificada em bytes antes de descriptografar
-                # Fernet espera bytes, e seus dados podem estar como string na leitura do JSON.
-                # Se já estiverem em bytes, .encode() não causa problemas.
                 valor_original_bytes = cipher.decrypt(valor_criptografado.encode('utf-8'))
                 valor_original = valor_original_bytes.decode('utf-8')
 
-                # Se for um número como idade, converte de volta para int
                 if campo == "idade":
                     valor_original = int(valor_original)
                 
                 usuario_descriptografado[campo] = valor_original
             except Exception as e:
-                # É importante ser mais específico com o erro aqui para não mascarar outros problemas.
-                # Por exemplo, InvalidToken se a descriptografia falhar.
                 print(f"Erro ao descriptografar o campo '{campo}' para o usuário (ou dado inválido): {e}")
-                # Opcional: Manter o valor criptografado ou definir como None/default se a descriptografia falhou
-                # usuario_descriptografado[campo] = None 
-                # ou manter o valor criptografado:
-                # usuario_descriptografado[campo] = usuario[campo] 
     return usuario_descriptografado
 
 def carregar_acessos():
@@ -82,6 +71,18 @@ def carregar_acessos():
     except json.JSONDecodeError:
         print("Erro: O arquivo 'user.json' não é um JSON válido. Verifique o conteúdo.")
         return {"usuarios": []} # Retorna uma estrutura vazia para evitar erros
+    
+def verificar_acesso(usuario, senha):
+    """Verifica o login usando hash com bcrypt"""
+    acessos = carregar_acessos()
+    for u in acessos["usuarios"]:
+        if u["username"] == usuario:
+            senha_armazenada = u["password"]
+            if bcrypt.checkpw(senha.encode('utf-8'), senha_armazenada.encode('utf-8')):
+            # Retorna a role e o nome completo do usuário
+                nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
+                return u["role"], nome_completo
+    return None, None  # Retorna None se o login ou senha estiverem incorretos
     
 def cadastrar_usuario():
     """Função para informar sobre o processo de cadastro de um novo usuário conforme a LGPD."""
@@ -377,6 +378,8 @@ def estatisticas_gerais():
     print("\n====== ESTATÍSTICAS GERAIS ======")
 
     acessos = carregar_acessos()
+
+    # Filtra apenas alunos que deram consentimento e tem a chave 'role'
     alunos = [
         u for u in acessos["usuarios"]
         if u.get('role') == 'aluno' and u.get("consentimento") is True
@@ -418,15 +421,10 @@ def estatisticas_usuario():
         return
 
     #Tenta abrir o arquivo JSON com os dados dos usuários
-    try:
-        with open("user.json", "r", encoding="utf-8") as f:
-            dados = json.load(f)
-    except FileNotFoundError:
-        print("Arquivo de estatísticas não encontrado.")
-        return
+    dados_descriptografados = carregar_acessos()
     
     # Procura os dados do usuário logado no JSON
-    for usuario in dados["usuarios"]:
+    for usuario in dados_descriptografados["usuarios"]:
         if usuario.get("username") == usuario_logado_username:
             print("\n=== Estatísticas do Usuário ===")
             print(f"Nome: {usuario_logado}")
@@ -444,8 +442,7 @@ def estatisticas_usuario():
 def exportar_dados_xlsx(campo, valor=None):
     """Exporta dados filtrados para um arquivo Excel (.xlsx) em local escolhido pelo usuário."""
     try:
-        with open("user.json", "r", encoding="utf-8") as f:
-            dados = json.load(f)
+        dados = carregar_acessos()
     except FileNotFoundError:
         print("Arquivo de dados não encontrado.")
         return
@@ -492,8 +489,7 @@ def exportar_dados_xlsx(campo, valor=None):
 def exportar_alunos_xlsx():
     """Exporta dados de todos os usuários com role 'aluno' para um arquivo Excel (.xlsx) em local escolhido pelo usuário."""
     try:
-        with open("user.json", "r", encoding="utf-8") as f:
-            dados = json.load(f)
+        dados = carregar_acessos()
     except FileNotFoundError:
         print("Arquivo de dados não encontrado.")
         return
@@ -587,3 +583,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
