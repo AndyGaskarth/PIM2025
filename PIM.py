@@ -4,7 +4,7 @@ import bcrypt
 from cryptography.fernet import Fernet
 import os
 from datetime import datetime
-import openpyxl 
+import openpyxl
 from tkinter import Tk, filedialog
 
 
@@ -13,7 +13,7 @@ usuario_logado = None
 # Variável global para armazenar o tipo de acesso do usuário
 usuario_role = None
 
-# Armazena o nome de usuário do usuário atualmente logado, fiz isso porque não tava indo no menu de estatisticas :(
+# Armazena o nome de usuário do usuário atualmente logado, fiz isso porque não tava indo no menu de estatisticas 
 usuario_logado_username = None
 
 def carregar_acessos():
@@ -377,7 +377,7 @@ def estatisticas_usuario():
             print(f"Idade: {usuario.get('idade', 'N/A')}")
             print(f"Acessos: {usuario.get('acessos', 'N/A')}")
             print(f"Cursos Concluídos: {usuario.get('cursos_concluidos', 'N/A')}")
-            print(f"Tempo Médio de Estudo: {usuario.get('tempo_medio_estudo', 'N/A')} horas/semana")
+            print(f"Tempo Médio de Estudo: {usuario.get('media_semanal', 'N/A')} horas/semana")
             return
     print("Usuário não encontrado no arquivo de estatísticas.")
 
