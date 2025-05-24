@@ -83,18 +83,63 @@ def verificar_acesso(usuario, senha):
                 nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
                 return u["role"], nome_completo
     return None, None  # Retorna None se o login ou senha estiverem incorretos
+
+def salvar_usuario(usuario):
     
+    campos_sensiveis = ["firstname", "lastname","idade"]
+
+    dados = carregar_chave()
+    chave = carregar_chave()
+
+    for campo in campos_sensiveis:
+        if campo in usuario:
+            usuario[campo] = chave.encrypt(usuario[campo].encode()).decode()
+
+    dados["usuarios"].append(usuario)
+
+    with open("user.json", "w", encoding="utf-8") as f:
+        json.dump(dados, f, indent=4, ensure_ascii=False)
+
 def cadastrar_usuario():
     """Função para informar sobre o processo de cadastro de um novo usuário conforme a LGPD."""
-    print("=== Cadastro de Novo Usuário ===")
-    print("A fim de garantir a segurança e a conformidade com a Lei Geral de Proteção de Dados (LGPD),")
-    print("o cadastro de novos usuários deve ser realizado exclusivamente pela secretaria ou por um representante autorizado.")
-    print("Durante o processo de registro, será solicitado o seu consentimento para o uso de dados pessoais,")
-    print("os quais serão utilizados apenas para fins educacionais e de gestão da plataforma.")
-    print("Caso tenha dúvidas, procure seu coordenador ou responsável pelo setor administrativo.")
+    
+    usu = input("Digite o Usuario Escolhido Pelo o Aluno: ")
+    nome = input("Digite o Primeiro Nome do Aluno: ")
+    segundo = input("Digite o Ultimo Nome do Aluno: ")
+    senha = input("Digite a Senha Escolhida do Aluno: ")
+    curso = input("Digite o Curso Escolhido do Aluno: ")
+    ra = input("Digite o RA do Aluno: ")
+    idade = input("Digite a Idade do Aluno: ")
+    
+    consentimento = input("O aluno concorda com o termo de consentimento? (sim/não): ").strip().upper()
+    if consentimento != "S":
+        print("Cadastro cancelado. É necessário o consentimento do aluno para prosseguir.")
+        return
+    consentimento = True
 
-    # Futuramente, ao implementar o cadastro pelo sistema, utilizar hash para armazenar a senha :)
-    #senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+    if not all([nome, segundo, senha, curso]):
+        print("Todos os campos são obrigatórios.")
+        return
+        
+    senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+
+    usuario = {
+        "username": usu,
+        "password": senha_hash,
+        "role": "aluno",
+        "firstname": nome,
+        "lastname": segundo,
+        "ra": ra,
+        "idade": idade,
+        "acessos": 0,
+        "cursos_concluidos": 0,
+        "ultimo_curso": "Nenhum",
+        "media_semanal": 0,
+        "consentimento": consentimento,
+    }
+
+    salvar_usuario(usuario)
+    print(f"Usuário {usu} cadastrado com sucesso!")
 
 def registrar_log(usuario_logado):
     with open("acessos.log", "a", encoding="utf-8") as log:
@@ -507,7 +552,7 @@ def exportar_alunos_xlsx():
 
     # Cabeçalho
     ws.append(["Nome", "Sobrenome", "Idade", "RA"])
-
+ 
     # Dados
     for usuario in alunos:
         ws.append([
@@ -562,6 +607,7 @@ def menu_admin():
     print("1. Gerenciar Usuários")
     print("2. Alterar Senha de Usuário")
     print("3. Exportar informações do Usuário")
+    print("3. Cadastrar Novo Aluno")
     escolha = input("Escolha uma opção: ")
     if escolha == "1" and usuario_role == "admin":
         print("Gerenciando Usuários...")
@@ -571,6 +617,8 @@ def menu_admin():
     elif escolha == "3"and usuario_role == "admin":
         print("Exportando informações do usuário...")
         exportar_alunos_xlsx("username")
+    elif escolha == "4":
+        cadastrar_usuario()
     else:
         print("Opção inválida.")
     
