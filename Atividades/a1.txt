@@ -1,0 +1,15 @@
+Atividade 1: Crie uma página HTML simples com um título e um parágrafo.
+
+Atividade 2: Adicione um botão à página. Quando o botão for clicado, mostre um alerta com a mensagem "Olá, mundo!" usando JavaScript.
+
+Atividade 3: Crie uma lista não ordenada com três itens. Use CSS para mudar a cor do texto dos itens para azul.
+
+Atividade 4: Adicione um campo de texto e um botão. Quando o botão for clicado, mostre o texto digitado em um elemento <div> abaixo.
+
+Atividade 5: Crie um quadrado usando uma <div> e use CSS para definir sua largura, altura e cor de fundo. Faça com que, ao passar o mouse sobre o quadrado, a cor de fundo mude.
+
+Atividade 6: Crie uma página com duas seções. Use CSS para exibir as seções lado a lado em telas grandes e empilhadas em telas pequenas (responsividade).
+
+Atividade 7: Adicione uma imagem à página e use CSS para deixá-la circular (borda-radius: 50%).
+
+Atividade 8: Crie um contador simples com dois botões: um para aumentar e outro para diminuir o valor exibido.

@@ -560,6 +560,9 @@ def menu():
     elif escolha == "4" and usuario_role == "professor":
         menu_professor()
         # Aqui você pode implementar a lógica para a área do professor
+    elif escolha == "4" and usuario_role == "aluno":
+        menu_aluno()
+        # Aqui você pode implementar a lógica para a área do aluno
     elif escolha == "0":
         print("Saindo...")
         exit()
@@ -618,6 +621,26 @@ def menu_professor():
 
         # Aqui você pode implementar a lógica para solicitar cadastro de cursos
         # Exemplo: salvar o nome do curso em um arquivo ou enviar para um administrador
+    elif escolha == "0":
+        print("Voltando ao Menu Principal...")
+    else:
+        print("Opção inválida.")
+
+def menu_aluno():
+    print("=== Menu Aluno ===")
+    print("1. Atividades complementares")
+    print("2. Trabalhos em grupo")
+    print("3. Trabalhos individuais")
+    print("4. Provas")
+    print("0. Voltar ao Menu Principal")
+    escolha = input("Escolha uma opção: ")
+    if escolha == "1":
+        print("Atividades complementares")
+        # Aqui você pode implementar a lógica para exibir atividades complementares
+    elif escolha == "2":
+        ultimo_curso_assistido()
+    elif escolha == "3":
+        exportar_dados_xlsx("username", usuario_logado_username)
     elif escolha == "0":
         print("Voltando ao Menu Principal...")
     else:
