@@ -6,6 +6,7 @@ import os
 from datetime import datetime
 import openpyxl
 from tkinter import Tk, filedialog
+import copy
 
 
 # Variável global para armazenar o login do usuário
@@ -46,6 +47,30 @@ def descriptografar_campos(usuario, campos_sensiveis, cipher):
                 print(f"Erro ao descriptografar o campo '{campo}' para o usuário (ou dado inválido): {e}")
     return usuario_descriptografado
 
+def criptografar_campos_usuarios(usuarios, campos_sensiveis, cipher):
+    """
+    Recebe uma lista de usuários com campos descriptografados e retorna a lista 
+    com os campos sensíveis criptografados, pronta para salvar no JSON.
+    """
+
+    usuarios_criptografados = []
+
+    for usuario in usuarios:
+        # Faz uma cópia profunda para evitar alterações no original
+        usuario_copy = copy.deepcopy(usuario)
+
+        for campo in campos_sensiveis:
+            if campo in usuario_copy:
+                # Converte para string antes de criptografar
+                valor_str = str(usuario_copy[campo])
+                valor_criptografado = cipher.encrypt(valor_str.encode('utf-8')).decode('utf-8')
+                usuario_copy[campo] = valor_criptografado
+
+        usuarios_criptografados.append(usuario_copy)
+
+    return usuarios_criptografados
+    
+
 def carregar_acessos():
     """Carrega os acessos dos usuários a partir de um JSON e descriptografa os campos sensíveis."""
     cipher = carregar_chave()
@@ -64,7 +89,8 @@ def carregar_acessos():
             # Retorna um dicionário vazio ou estrutura padrão em caso de erro na estrutura
             return {"usuarios": []} # Retorne uma estrutura válida para evitar erros posteriores
 
-        return dados # <<< ESTA É A LINHA CRÍTICA ADICIONADA/CORRIGIDA
+        return dados
+    
     except FileNotFoundError:
         print("Erro: Arquivo 'user.json' não encontrado. Certifique-se de que ele existe.")
         return {"usuarios": []} # Retorna uma estrutura vazia para evitar erros
@@ -86,14 +112,18 @@ def verificar_acesso(usuario, senha):
 
 def salvar_usuario(usuario):
     
-    campos_sensiveis = ["firstname", "lastname","idade"]
+    campos_sensiveis = ["firstName", "lastName", "idade"]
 
-    dados = carregar_chave()
+    dados = carregar_acessos()
     chave = carregar_chave()
 
     for campo in campos_sensiveis:
         if campo in usuario:
-            usuario[campo] = chave.encrypt(usuario[campo].encode()).decode()
+            valor = str(usuario[campo])  # Garante que seja string
+            usuario[campo] = chave.encrypt(valor.encode('utf-8')).decode('utf-8')
+
+    if "usuarios" not in dados:
+        dados["usuarios"] = []
 
     dados["usuarios"].append(usuario)
 
@@ -201,29 +231,38 @@ def alterar_senha():
     username = input("Digite o nome de usuário para alterar a senha: ").strip()
     nova_senha = input("Digite a nova senha: ").strip()
 
+    if len(nova_senha) < 6:
+        print("A nova senha deve ter pelo menos 6 caracteres.")
+        return
+
     if not username or not nova_senha:
         print("O nome de usuário e a nova senha não podem estar vazios.")
         return
 
-    # Carregar os dados do arquivo JSON
-    acessos = carregar_acessos()
+    with open("user.json", "r", encoding="utf-8") as user_file:
+        # Carrega os dados do arquivo JSON e retorna como um dicionário
+        dados = json.load(user_file)
+    
 
-    # Procurar o usuário no JSON
-    for usuario in acessos["usuarios"]:
+    for usuario in dados["usuarios"]:
         if usuario["username"] == username:
             senha_hash = bcrypt.hashpw(nova_senha.encode('utf-8'), bcrypt.gensalt())
             usuario["password"] = senha_hash.decode('utf-8')  # Atualizar a senha
+            usuario_encontrado = True
             break
-    else:
+
+    if not usuario_encontrado:
         print("Usuário não encontrado.")
         return
 
-    # Salvar as alterações no arquivo JSON
+    # 💾 Salva o JSON com os dados atualizados
     with open("user.json", "w", encoding="utf-8") as user_file:
-        json.dump(acessos, user_file, indent=4, ensure_ascii=False)
+        json.dump(dados, user_file, indent=4, ensure_ascii=False)
 
     print(f"A senha do usuário '{username}' foi alterada com sucesso.")
 
+
+    
 def front_end_curso(linhas_por_pagina=5):
     try:
         with open("cursos/front_end.txt", "r", encoding="utf-8") as f:
@@ -605,9 +644,6 @@ def menu():
     elif escolha == "4" and usuario_role == "professor":
         menu_professor()
         # Aqui você pode implementar a lógica para a área do professor
-    elif escolha == "4" and usuario_role == "aluno":
-        menu_aluno()
-        # Aqui você pode implementar a lógica para a área do aluno
     elif escolha == "0":
         print("Saindo...")
         exit()
@@ -672,26 +708,6 @@ def menu_professor():
         print("Voltando ao Menu Principal...")
     elif escolha == "4":
         cadastrar_usuario()
-    else:
-        print("Opção inválida.")
-
-def menu_aluno():
-    print("=== Menu Aluno ===")
-    print("1. Atividades complementares")
-    print("2. Trabalhos em grupo")
-    print("3. Trabalhos individuais")
-    print("4. Provas")
-    print("0. Voltar ao Menu Principal")
-    escolha = input("Escolha uma opção: ")
-    if escolha == "1":
-        print("Atividades complementares")
-        # Aqui você pode implementar a lógica para exibir atividades complementares
-    elif escolha == "2":
-        ultimo_curso_assistido()
-    elif escolha == "3":
-        exportar_dados_xlsx("username", usuario_logado_username)
-    elif escolha == "0":
-        print("Voltando ao Menu Principal...")
     else:
         print("Opção inválida.")
     
