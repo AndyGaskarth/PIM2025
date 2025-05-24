@@ -583,6 +583,7 @@ def menu():
     """Função para exibir o menu principal."""
     global usuario_logado, usuario_role
     print(f"\nUsuário logado: {usuario_logado}")
+    print("=== Bem vindo a TecEducation ===")
     print("=== Menu Principal ===")
     print("1. Menu de Cursos Disponíveis")
     print("2. Segurança e Privacidade")
