@@ -157,8 +157,6 @@ def cadastrar_usuario():
 
     senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt()).decode("utf-8")
 
-    print(f"Senha hash gerada: {senha_hash}")
-
     usuario = {
         "username": usu,
         "password": senha_hash,
