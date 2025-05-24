@@ -358,9 +358,15 @@ def cadastro_cursos():
             print("O nome do curso não pode estar vazio. Tente novamente.")
 
 def ultimo_curso_assistido():
-    """Função para exibir o último curso assistido."""
-    print("=== Último Curso Assistido ===")
-    print("Nenhum curso assistido registrado.")
+    """Exibe o último curso assistido do usuário logado, buscando no JSON."""
+    global usuario_logado_username
+    dados = carregar_acessos()
+    for usuario in dados.get("usuarios", []):
+        if usuario.get("username") == usuario_logado_username:
+            print("=== Último Curso Assistido ===")
+            print(usuario.get("ultimo_curso", "Nenhum curso assistido registrado."))
+            return
+    print("Usuário não encontrado ou nenhum curso assistido registrado.")
 
 
 def menu_seguranca():
@@ -733,9 +739,26 @@ def menu_aluno():
             print("Arquivo de atividades complementares não encontrado.")
         # Aqui você pode implementar a lógica para exibir atividades complementares
     elif escolha == "2":
-        ultimo_curso_assistido()
+        print("=== Trabalhos em grupo ===")
+        try:
+            with open("atividades/a2.txt", "r", encoding="utf-8") as f:
+                print(f.read())
+        except FileNotFoundError:
+            print("Arquivo não encontrado.")
     elif escolha == "3":
-        exportar_dados_xlsx("username", usuario_logado_username)
+        print("=== Trabalhos individuais ===")
+        try:
+            with open("atividades/a3.txt", "r", encoding="utf-8") as f:
+                print(f.read())
+        except FileNotFoundError:
+            print("Arquivo não encontrado.")
+    elif escolha == "4":
+        print("=== Provas ===")
+        try:
+            with open("atividades/a4.txt", "r", encoding="utf-8") as f:
+                print(f.read())
+        except FileNotFoundError:
+            print("Arquivo não encontrado.")
     elif escolha == "0":
         print("Voltando ao Menu Principal...")
     else:
