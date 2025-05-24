@@ -124,26 +124,17 @@ def salvar_usuario(usuario):
         json.dump(dados, f, indent=4, ensure_ascii=False)
 
 
-def salvar_usuario(usuario):
-    
-    campos_sensiveis = ["firstName", "lastName", "idade"]
-    with open("user.json", "r", encoding="utf-8") as user_file:
-         # Carrega os dados do arquivo JSON e retorna como um dicionário
-         dados = json.load(user_file)
-    chave = carregar_chave
-
-    for campo in campos_sensiveis:
-        if campo in usuario:
-            valor = str(usuario[campo])  # Garante que seja string
-            usuario[campo] = chave.encrypt(valor.encode('utf-8')).decode('utf-8')
-
-    if "usuarios" not in dados:
-        dados["usuarios"] = []
-
-    dados["usuarios"].append(usuario)
-
-    with open("user.json", "w", encoding="utf-8") as f:
-        json.dump(dados, f, indent=4, ensure_ascii=False)
+def verificar_acesso(usuario, senha):
+    """Verifica o login usando hash com bcrypt"""
+    acessos = carregar_acessos()
+    for u in acessos["usuarios"]:
+        if u["username"] == usuario:
+            senha_armazenada = u["password"]
+            if bcrypt.checkpw(senha.encode('utf-8'), senha_armazenada.encode('utf-8')):
+            # Retorna a role e o nome completo do usuário
+                nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
+                return u["role"], nome_completo
+    return None, None  # Retorna None se o login ou senha estiverem incorretos
 
 def cadastrar_usuario():
     usu = input("Digite o Usuario Escolhido Pelo o Aluno: ")
