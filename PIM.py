@@ -52,7 +52,6 @@ def criptografar_campos_usuarios(usuarios, campos_sensiveis, cipher):
     Recebe uma lista de usuários com campos descriptografados e retorna a lista 
     com os campos sensíveis criptografados, pronta para salvar no JSON.
     """
-
     usuarios_criptografados = []
 
     for usuario in usuarios:
@@ -98,24 +97,40 @@ def carregar_acessos():
         print("Erro: O arquivo 'user.json' não é um JSON válido. Verifique o conteúdo.")
         return {"usuarios": []} # Retorna uma estrutura vazia para evitar erros
     
-def verificar_acesso(usuario, senha):
-    """Verifica o login usando hash com bcrypt"""
-    acessos = carregar_acessos()
-    for u in acessos["usuarios"]:
-        if u["username"] == usuario:
-            senha_armazenada = u["password"]
-            if bcrypt.checkpw(senha.encode('utf-8'), senha_armazenada.encode('utf-8')):
-            # Retorna a role e o nome completo do usuário
-                nome_completo = f"{u.get('firstName', '')} {u.get('lastName', '')}".strip()
-                return u["role"], nome_completo
-    return None, None  # Retorna None se o login ou senha estiverem incorretos
+def salvar_usuario(usuario):
+    cipher = carregar_chave()
+    campos_sensiveis = ["firstName", "lastName", "idade"]
+    dados = {"usuarios": []} # Inicializa com uma lista vazia de usuários por padrão
+
+    # Verifica se o arquivo user.json existe e não está vazio
+    if os.path.exists("user.json") and os.path.getsize("user.json") > 0:
+        try:
+            with open("user.json", "r", encoding="utf-8") as user_file:
+                dados = json.load(user_file)
+        except json.JSONDecodeError:
+            print("Atenção: O arquivo 'user.json' está corrompido ou vazio. Criando um novo.")
+
+    for campo in campos_sensiveis:
+        if campo in usuario:
+            valor = str(usuario[campo])
+            usuario[campo] = cipher.encrypt(valor.encode('utf-8')).decode('utf-8')
+
+    if "usuarios" not in dados:
+        dados["usuarios"] = []
+
+    dados["usuarios"].append(usuario)
+
+    with open("user.json", "w", encoding="utf-8") as f:
+        json.dump(dados, f, indent=4, ensure_ascii=False)
+
 
 def salvar_usuario(usuario):
     
     campos_sensiveis = ["firstName", "lastName", "idade"]
-
-    dados = carregar_acessos()
-    chave = carregar_chave()
+    with open("user.json", "r", encoding="utf-8") as user_file:
+         # Carrega os dados do arquivo JSON e retorna como um dicionário
+         dados = json.load(user_file)
+    chave = carregar_chave
 
     for campo in campos_sensiveis:
         if campo in usuario:
@@ -131,8 +146,6 @@ def salvar_usuario(usuario):
         json.dump(dados, f, indent=4, ensure_ascii=False)
 
 def cadastrar_usuario():
-    """Função para informar sobre o processo de cadastro de um novo usuário conforme a LGPD."""
-    
     usu = input("Digite o Usuario Escolhido Pelo o Aluno: ")
     nome = input("Digite o Primeiro Nome do Aluno: ")
     segundo = input("Digite o Ultimo Nome do Aluno: ")
@@ -140,25 +153,27 @@ def cadastrar_usuario():
     curso = input("Digite o Curso Escolhido do Aluno: ")
     ra = input("Digite o RA do Aluno: ")
     idade = input("Digite a Idade do Aluno: ")
-    
-    consentimento = input("O aluno concorda com o termo de consentimento? (sim/não): ").strip().upper()
-    if consentimento != "S":
+
+    consentimento = input("O aluno concorda com o termo de consentimento? (sim/não): ").strip().lower()
+    if consentimento != "sim":
         print("Cadastro cancelado. É necessário o consentimento do aluno para prosseguir.")
         return
     consentimento = True
 
-    if not all([nome, segundo, senha, curso]):
+    if not all([nome, segundo, senha, curso, ra, idade]):
         print("Todos os campos são obrigatórios.")
         return
-        
-    senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+
+    senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt()).decode("utf-8")
+
+    print(f"Senha hash gerada: {senha_hash}")
 
     usuario = {
         "username": usu,
         "password": senha_hash,
         "role": "aluno",
-        "firstname": nome,
-        "lastname": segundo,
+        "firstName": nome,
+        "lastName": segundo,
         "ra": ra,
         "idade": idade,
         "acessos": 0,
@@ -170,6 +185,7 @@ def cadastrar_usuario():
 
     salvar_usuario(usuario)
     print(f"Usuário {usu} cadastrado com sucesso!")
+
 
 def registrar_log(usuario_logado):
     with open("acessos.log", "a", encoding="utf-8") as log:
