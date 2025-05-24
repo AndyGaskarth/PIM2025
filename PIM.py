@@ -686,6 +686,11 @@ def menu_aluno():
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
         print("Atividades complementares")
+        try:
+            with open("atividades/atividades_complementares.txt", "r", encoding="utf-8") as f:
+                print(f.read())
+        except FileNotFoundError:
+            print("Arquivo de atividades complementares não encontrado.")
         # Aqui você pode implementar a lógica para exibir atividades complementares
     elif escolha == "2":
         ultimo_curso_assistido()
