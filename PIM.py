@@ -687,7 +687,7 @@ def menu_aluno():
     if escolha == "1":
         print("Atividades complementares")
         try:
-            with open("atividades/atividades_complementares.txt", "r", encoding="utf-8") as f:
+            with open("atividades/a1.txt", "r", encoding="utf-8") as f:
                 print(f.read())
         except FileNotFoundError:
             print("Arquivo de atividades complementares não encontrado.")
