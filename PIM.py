@@ -377,6 +377,10 @@ def menu_estatisticas():
 def estatisticas_gerais():
     print("\n====== ESTATÍSTICAS GERAIS ======")
 
+    if usuario_role not in ["admin","coordenacao","professor"]:
+        print("Acesso negado. Apenas administradores e professores podem acessar as estatísticas gerais.")
+        return
+
     acessos = carregar_acessos()
 
     # Filtra apenas alunos que deram consentimento e tem a chave 'role'
@@ -540,6 +544,8 @@ def menu():
     print("3. Estatísticas Do Usuário")
     if usuario_role == "admin":
         print("4. Menu de Gerenciamento de Usuários")
+    if usuario_role == "professor":
+        print("4. Area do Professor")
     print("0. Sair")
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
@@ -551,6 +557,9 @@ def menu():
     elif escolha == "4" and usuario_role == "admin":
         menu_admin()
         # Aqui você pode implementar a lógica para exportar as informações do usuário
+    elif escolha == "4" and usuario_role == "professor":
+        menu_professor()
+        # Aqui você pode implementar a lógica para a área do professor
     elif escolha == "0":
         print("Saindo...")
         exit()
@@ -562,6 +571,7 @@ def menu_admin():
     print("1. Gerenciar Usuários")
     print("2. Alterar Senha de Usuário")
     print("3. Exportar informações do Usuário")
+    print("0. Voltar ao Menu Principal")
     escolha = input("Escolha uma opção: ")
     if escolha == "1" and usuario_role == "admin":
         print("Gerenciando Usuários...")
@@ -571,6 +581,45 @@ def menu_admin():
     elif escolha == "3"and usuario_role == "admin":
         print("Exportando informações do usuário...")
         exportar_alunos_xlsx("username")
+    elif escolha == "0":
+        print("Voltando ao Menu Principal...")
+    else:
+        print("Opção inválida.")
+
+def menu_professor():
+    print("=== Menu Professor ===")
+    print("1. Ver Estatísticas dos Alunos")
+    print("2. Solicitar Exportação de Informações dos Alunos")
+    print("3. Solicitar Cadastro de Cursos")
+    print("0. Voltar ao Menu Principal")
+    escolha = input("Escolha uma opção: ")
+    if escolha == "1":
+        print("Exibindo estatísticas dos alunos...")
+        # Aqui você pode implementar a lógica para exibir estatísticas dos alunos
+    elif escolha == "2":
+        print("Solicitando exportação de informações dos alunos...")
+        print("Os administradores serão notificados para realizar a exportação.")
+        # Aqui você pode implementar a lógica para solicitar exportação de informações
+    elif escolha == "3":
+        print("Solicitando cadastro de cursos...")
+        print("Os administradores serão notificados para realizar o cadastro.")
+        # Solicita o nome do curso
+        curso_nome = input("Digite o nome do curso: ").strip()
+        if curso_nome:
+            # Cria a pasta cursos se não existir
+            os.makedirs("cursos", exist_ok=True)
+            # Cria o arquivo .txt com o nome do curso
+            nome_arquivo = os.path.join("cursos", f"{curso_nome}.txt")
+            with open(nome_arquivo, "w", encoding="utf-8") as f:
+                f.write(f"Curso: {curso_nome}\nDescrição: (adicione aqui a descrição do curso)")
+            print(f"Arquivo '{nome_arquivo}' criado com sucesso!")
+        else:
+            print("O nome do curso não pode estar vazio.")
+
+        # Aqui você pode implementar a lógica para solicitar cadastro de cursos
+        # Exemplo: salvar o nome do curso em um arquivo ou enviar para um administrador
+    elif escolha == "0":
+        print("Voltando ao Menu Principal...")
     else:
         print("Opção inválida.")
     
