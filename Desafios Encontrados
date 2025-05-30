@@ -1,0 +1,13 @@
+Ao longo do desenvolvimento da plataforma TecEducations, a gente se deparou com vários obstáculos que testaram nossa paciência, criatividade e até nossa amizade (brincadeira… mais ou menos 😅).
+
+A maior dificuldade técnica foi, sem dúvida, criptografar corretamente os dados dos usuários. No começo, a gente até achou que seria simples: “ah, é só usar uma biblioteca e pronto”. Mas quando fomos colocar a mão na massa, descobrimos que não era tão direto assim. Conseguir proteger a senha com bcrypt foi tranquilo, mas a parte de criptografar os campos de nome, idade e sobrenome usando Fernet foi uma saga. A cada tentativa surgia um novo erro: às vezes o dado não salvava direito, outras vezes não conseguíamos descriptografar na hora de mostrar os dados. Era um quebra-cabeça.
+
+Outro ponto que pegou bastante foi a lógica do sistema. Tínhamos boas ideias, mas na prática, quando escrevíamos o código, as coisas nem sempre funcionavam como imaginávamos. Várias vezes a gente parava tudo, apagava parte do código, discutia soluções, voltava atrás… e muitas dessas tentativas acabavam só aumentando a nossa dor de cabeça. Quem nunca perdeu horas porque esqueceu de indentar um if, né?
+
+Além disso, como algumas funções exigiam um nível técnico que a gente ainda não dominava totalmente, precisamos estudar bastante por fora. Lemos artigos, assistimos vídeos no YouTube, entramos em fóruns, e usamos bastante o ChatGPT (inclusive pra tirar dúvidas bem básicas que a gente nem sabia por onde começar). Foi muito aprendizado na marra.
+
+Também tivemos alguns problemas na parte de exportação para Excel, especialmente com a biblioteca openpyxl. Às vezes o programa gerava o arquivo, mas não organizava os dados como queríamos, ou então não salvava na pasta certa. Foi preciso testar com vários tipos de dados e caminhos até acertar.
+
+E claro, como todo projeto em grupo, tivemos que lidar com organização de tarefas, agendas diferentes, bugs que apareciam do nada e arquivos que não estavam atualizados no grupo do drive. A parte boa é que isso nos forçou a melhorar a comunicação e trabalhar como equipe de verdade.
+
+No final das contas, o projeto nos desafiou bastante, mas também nos ensinou muito mais do que esperávamos. Hoje a gente olha pra trás e vê que valeu cada hora quebrando a cabeça, porque conseguimos entregar algo funcional, seguro e com propósito social. E melhor ainda: agora a gente sabe resolver coisas que antes pareciam impossíveis.
